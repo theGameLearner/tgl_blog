@@ -11,3 +11,31 @@ body {
     //   color: black;
     //  }
 }
+nav.filetree-sidebar {
+  h1::before {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 3em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
+    background-position: center;
+  }
+}
+
+nav.navbar {
+  .navbar-inner {
+    h1::before {
+      content: " ";
+      display: inline-block;
+      width: 1em;
+      height: 1.2em;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url("/img/user/Images/Logo/Tgl logo.png");
+      margin-right: 5px;
+      background-position: bottom;
+    }
+  }
+}
