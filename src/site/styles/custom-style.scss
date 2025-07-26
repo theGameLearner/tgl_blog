@@ -12,12 +12,12 @@ body {
     //  }
 }
 
-// Add a logo on top left of the screen
+// Add a logo on top left of the screen above filetree sidebar
 nav.filetree-sidebar {
-  top: 3em;
-  padding-top: 7em; // space to show the logo above the top bar
-  height: calc(100% - 7em); // Adjust height accordingly
-  h1::before {
+  top: 3em; // padding from the top of the page
+  padding-top: 7em; // content of this div will leave space to show the logo above the top bar
+  height: calc(100% - 7em); // Adjust height of the filetree-sidebar accordingly
+  h1::before { 
     content: " ";
     display: block;
     width: 100%;
@@ -27,11 +27,12 @@ nav.filetree-sidebar {
     left: 0;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
-    background-position: center;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png");  // URL of the image being used in the sidebar
+    background-position: left center; // Horizontal left, vertical center
   }
 }
 
+// Add a logo in the browser's tab for this page
 nav.navbar {
   .navbar-inner {
     h1::before {
