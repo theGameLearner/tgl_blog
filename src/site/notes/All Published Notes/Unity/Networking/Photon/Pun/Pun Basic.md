@@ -3,9 +3,9 @@
 ---
 
 ## PUN
+Proton's Pun is no longer supported. Use the updated options if possible.
 
 ### Config
-
 Pun Wizard -> Locate Photon Server Settings -> set up app id and chat ID if applicable
 
 ### Connecting to Server

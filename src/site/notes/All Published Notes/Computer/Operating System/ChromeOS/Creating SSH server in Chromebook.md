@@ -2,7 +2,6 @@
 {"dg-publish":true,"permalink":"/all-published-notes/computer/operating-system/chrome-os/creating-ssh-server-in-chromebook/"}
 ---
 
-# Creating SSH server in Chromebook
 posted: 2025-07-26
 
 ### Defining the username and password:
@@ -55,8 +54,3 @@ posted: 2025-07-26
 - \[linux\] \[Terminal\] prompted for password, type the password set in ChromeOS: GameLearning$#22
 
 >Remember that there is often no user feedback, so you need to type the password and hit 'enter' even when you cannot see it being typed.
-
-# Footnotes
-[^1]:
-[^2]:
-
