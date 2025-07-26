@@ -19,8 +19,7 @@ Topics:
 	- Networking
 		- Photon
 			- [[All Published Notes/Unity/Networking/Photon/Pun/Pun Basic\|Pun Basic]]
-- 
-	- Plugins
+- Plugins
 		- [Finite State Machine](https://github.com/tglGames-Plugins/Finite-State-Machine)
 		- [Internet Access Check](https://github.com/tglGames-Plugins/Internet_Access_Check)
 - 

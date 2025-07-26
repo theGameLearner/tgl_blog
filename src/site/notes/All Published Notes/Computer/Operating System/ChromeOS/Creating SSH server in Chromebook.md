@@ -50,9 +50,11 @@ posted: 2025-07-26
 
 ---
 ### Connect to the created SSH
-- \[linux\] \[Terminal\] open terminal in linux machine, use the ssh command to tunnel into chromeOS `ssh -p 1234 itrishabhjain@192.168.31.48`
+- \[linux\] \[Terminal\] open terminal in linux machine, use the ssh command to tunnel into chromeOS `ssh -p 1234 thegamelearner@192.168.31.48`
 - \[linux\] \[Terminal\] if asked 'The authenticity of host '\[192.168.31.48\]:1234 (\[192.168.31.48\]:1234)' can't be established.', 'Are you sure you want to continue connecting (yes/no/\[fingerprint\])?' type `yes`
-- \[linux\] \[Terminal\] prompted for password, type the password set in ChromeOS
+- \[linux\] \[Terminal\] prompted for password, type the password set in ChromeOS: GameLearning$#22
+
+>Remember that there is often no user feedback, so you need to type the password and hit 'enter' even when you cannot see it being typed.
 
 # Footnotes
 [^1]:
