@@ -14,7 +14,9 @@ body {
 
 // Add a logo on top left of the screen
 nav.filetree-sidebar {
-  padding-top: 5em;
+  top: 3em;
+  padding-top: 7em; // space to show the logo above the top bar
+  height: calc(100% - 7em); // Adjust height accordingly
   h1::before {
     content: " ";
     display: block;
@@ -22,6 +24,7 @@ nav.filetree-sidebar {
     height: 3em; // This is the height of your logo image
     position: absolute;
     top: 0;
+    left: 0;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
