@@ -14,15 +14,12 @@ body {
 
 // Add a logo on top left of the screen
 nav.filetree-sidebar {
-  top: 4.5em; // Push sidebar below logo
-  height: calc(100% - 4.5em); // Adjust height accordingly
-  padding-top: 3.5em;
+  padding-top: 5em;
   h1::before {
     content: " ";
     display: block;
     width: 100%;
     height: 3em; // This is the height of your logo image
-    margin-bottom: 1.5em; // Add space below logo
     position: absolute;
     top: 0;
     background-size: contain;
