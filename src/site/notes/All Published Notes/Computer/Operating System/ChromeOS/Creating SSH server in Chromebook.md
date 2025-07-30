@@ -3,6 +3,7 @@
 ---
 
 created: 2025-07-26
+updated: 2025-07-29
 
 ### Defining the username and password:
 - We need a account password, if it was not set, the authentication from the machines can fail
