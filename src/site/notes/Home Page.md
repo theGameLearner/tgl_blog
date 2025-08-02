@@ -13,10 +13,14 @@ This is my logo, I will try to have it in all my pages as a header image.
 About me: [[All Published Notes/Resume/Resume\|My Resume]]
 
 Topics:
-- Computer
-	- Operating System
-		- ChromeOS
-			- [[All Published Notes/Computer/Operating System/ChromeOS/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
+- Hardware
+	- Computer
+		- Operating System
+			- ChromeOS
+				- [[All Published Notes/Hardware/Computer/Operating System/ChromeOS/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
+	- Mobile
+		- [[All Published Notes/Hardware/Mobile/Termux\|Termux]]
+			- [[All Published Notes/Hardware/Mobile/Termux/Changing Termux Font\|Changing Termux Font]]
 - Unity
 	- Networking
 		- Photon
