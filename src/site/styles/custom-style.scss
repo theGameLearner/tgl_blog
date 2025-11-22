@@ -12,50 +12,11 @@ body {
     //  }
 }
 
-
-// 1. Maintain padding and top positioning on the main sidebar container
-nav.filetree-sidebar {
-    top: 3em; 
-    padding-top: 7em;
-    height: calc(100% - 7em);
-}
-
-// 2. Target the anchor tag (the parent of the H1 site name)
-nav.filetree-sidebar > a {
-    position: relative; // CRITICAL: Defines the positioning context
-    display: block;
-    height: 7em; 
-    
-    // 3. Create the logo using the ::before pseudo-element on the anchor tag
-    &::before {
-        content: " ";
-        display: block;
-        
-        position: absolute;
-        top: 0.5em; 
-        left: 50%; 
-        transform: translateX(-50%);
-        z-index: 100; // CRITICAL: Ensures it layers on top
-        
-        // Logo dimensions
-        width: 4em; 
-        height: 4em; 
-        
-        // IMAGE PROPERTIES - MUST BE PERFECTLY CORRECT
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
-        background-position: center center;
-    }
-}
-
-/***
 // Add a logo on top left of the screen above filetree sidebar
 nav.filetree-sidebar {
   top: 3em; // padding from the top of the page
   padding-top: 7em; // content of this div will leave space to show the logo above the top bar
   height: calc(100% - 7em); // Adjust height of the filetree-sidebar accordingly
-    
   h1::before { 
     content: " ";
     display: block;
@@ -70,9 +31,9 @@ nav.filetree-sidebar {
     background-repeat: no-repeat;
     background-image: url("/img/user/Images/Logo/Tgl logo.png");  // URL of the image being used in the sidebar
     background-position: center;
-  } 
-***/
-
+    
+  }
+}
 
 // Add a logo in the browser's tab for this page
 nav.navbar {
