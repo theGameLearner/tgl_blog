@@ -2,6 +2,7 @@
 {"dg-publish":true,"permalink":"/home-page/","tags":["gardenEntry"]}
 ---
 
+![Tgl logo.png|100](/img/user/Images/Logo/Tgl%20logo.png)
 
 I am Rishabh Jain, I use `TGL` as a common handle. this was because i made my Unity account named TheGameLearner. 
 I am a Software Developer who has realised that everything is a game, and we need to learn rules to excel at any game, be it work, play, social interactions or anything more.
