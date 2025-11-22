@@ -11,12 +11,8 @@ body {
     //   color: black;
     //  }
 }
-// 1. Maintain padding and top positioning on the main sidebar container
-nav.filetree-sidebar {
-    top: 3em; 
-    padding-top: 7em; // Keep space reserved for the logo area
-    height: calc(100% - 7em);
-}
+
+
 // 1. Maintain padding and top positioning on the main sidebar container
 nav.filetree-sidebar {
     top: 3em; 
