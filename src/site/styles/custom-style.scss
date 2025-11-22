@@ -21,14 +21,17 @@ nav.filetree-sidebar {
     content: " ";
     display: block;
     width: 100%;
-    height: 3em; // This is the height of your logo image
+    height: 4em; // This is the height of your logo image
     position: absolute;
     top: 0;
     left: 0;
+    margin-bottom: 0.5em; // Space between logo and text
+    // Image properties
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("/img/user/Images/Logo/Tgl logo.png");  // URL of the image being used in the sidebar
     background-position: center;
+    
   }
 }
 
