@@ -17,12 +17,16 @@ nav.filetree-sidebar {
     padding-top: 7em; // Keep space reserved for the logo area
     height: calc(100% - 7em);
 }
+// 1. Maintain padding and top positioning on the main sidebar container
+nav.filetree-sidebar {
+    top: 3em; 
+    padding-top: 7em;
+    height: calc(100% - 7em);
+}
 
 // 2. Target the anchor tag (the parent of the H1 site name)
 nav.filetree-sidebar > a {
-    // This is the CRITICAL line: it makes all absolute positioning inside it relative to this <a> tag.
-    position: relative; 
-    // Ensure the anchor is visible and takes up the reserved space
+    position: relative; // CRITICAL: Defines the positioning context
     display: block;
     height: 7em; 
     
@@ -31,18 +35,17 @@ nav.filetree-sidebar > a {
         content: " ";
         display: block;
         
-        // Position the logo absolutely relative to the <a> tag
         position: absolute;
-        top: 0.5em; // Slight offset from the very top of the <a> tag
+        top: 0.5em; 
         left: 50%; 
-        transform: translateX(-50%); // Center horizontally
-        z-index: 100; // Ensure it's above any other content/background layers
+        transform: translateX(-50%);
+        z-index: 100; // CRITICAL: Ensures it layers on top
         
-        // Logo dimensions (64x64px is 4em in a standard context)
+        // Logo dimensions
         width: 4em; 
         height: 4em; 
         
-        // Image properties
+        // IMAGE PROPERTIES - MUST BE PERFECTLY CORRECT
         background-size: contain;
         background-repeat: no-repeat;
         background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
