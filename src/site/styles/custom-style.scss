@@ -11,25 +11,34 @@ body {
     //   color: black;
     //  }
 }
-
 // 1. Maintain padding and top positioning on the main sidebar container
 nav.filetree-sidebar {
     top: 3em; 
     padding-top: 7em; // Keep space reserved for the logo area
     height: calc(100% - 7em);
+}
 
-    // 2. Create the logo using the ::before pseudo-element on the sidebar itself
+// 2. Target the anchor tag (the parent of the H1 site name)
+nav.filetree-sidebar > a {
+    // This is the CRITICAL line: it makes all absolute positioning inside it relative to this <a> tag.
+    position: relative; 
+    // Ensure the anchor is visible and takes up the reserved space
+    display: block;
+    height: 7em; 
+    
+    // 3. Create the logo using the ::before pseudo-element on the anchor tag
     &::before {
         content: " ";
         display: block;
         
-        // Position the logo absolutely at the very top of the reserved space
+        // Position the logo absolutely relative to the <a> tag
         position: absolute;
-        top: 0.5em; // Slight offset from the very top of the sidebar nav
-        left: 50%; // Start positioning from the center
-        transform: translateX(-50%); // Shift back by half its width to truly center it
+        top: 0.5em; // Slight offset from the very top of the <a> tag
+        left: 50%; 
+        transform: translateX(-50%); // Center horizontally
+        z-index: 100; // Ensure it's above any other content/background layers
         
-        // Logo dimensions
+        // Logo dimensions (64x64px is 4em in a standard context)
         width: 4em; 
         height: 4em; 
         
