@@ -24,6 +24,8 @@ old projects : [itch](https://thegamelearner.itch.io/)
 Topics are available on the right side of the page, but adding here as well for reference.
 
 Topics:
+- Desktop Publishing (DTP)
+	- [[All Published Notes/Desktop Publishing (DTP)/InkSpace\|InkSpace]]
 - Hardware
 	- Computer
 		- Operating System
