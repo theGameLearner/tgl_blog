@@ -13,6 +13,7 @@ Pros:
 - free
 - open source
 - App Image to run on linux
+
 Cons:
 - each doc will take a long time, specially when I am not an artist.
 
