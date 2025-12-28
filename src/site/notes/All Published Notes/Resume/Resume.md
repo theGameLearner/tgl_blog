@@ -22,3 +22,6 @@ IT Profile:
      Download PDF
    </button>
 </a> Download PDF </button> </a> 'Rishabh Jain Resume'  
+
+
+[![tglGames|10](/All%20Published%20Notes/Resume/pdf/Rishabh%20Jain%20Resume%20(IT)_with_hyperlinks.pdf)](https://www.linkedin.com/in/rishabh-jain-266081b7/)  
