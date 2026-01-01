@@ -14,7 +14,7 @@ I will be covering topics like: Unity, linux, NodeJs, homelab, etc. depending on
 I am an introvert so please try to reach out to me via text based communications.
 I am always trying something new, I may not always share what I will try.😉
 #### Professionally
-Hire me: [[All Published Notes/Resume/Resume\|Resume]] 
+Hire me: [[All Published Notes/Resume/Resume\|Resume]]
 Contact Me: [LinkedIn](https://www.linkedin.com/in/rishabh-jain-266081b7/), [github](https://github.com/theGameLearner/)
 See my Unity plugins: [github](https://github.com/tglGames-Plugins)
 old projects : [itch](https://thegamelearner.itch.io/)
@@ -24,43 +24,53 @@ old projects : [itch](https://thegamelearner.itch.io/)
 Topics are available on the right side of the page, but adding here as well for reference.
 
 Topics:
-- Desktop Publishing (DTP)
-	- [[All Published Notes/Desktop Publishing (DTP)/InkSpace\|InkSpace]]
-- Hardware
-	- Computer
-		- Operating System
-			- ChromeOS
-				- Remote Connections
-					- CLI
-						- [[All Published Notes/Hardware/Computer/Operating System/ChromeOS/Remote Connections/CLI/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
-			- Linux Mint
-				- Remote Connections
-					- [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - TightVNC\|Creating VNC server in LinuxMint - TightVNC]]
-					- [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - x11vnc\|Creating VNC server in LinuxMint - x11vnc]]
-					- [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]] - best result
-			- [[All Published Notes/Hardware/Computer/Operating System/Connecting Remotely\|Connecting Remotely]]
-	- Mobile
-		- [[All Published Notes/Hardware/Mobile/Termux\|Termux]]
-			- [[All Published Notes/Hardware/Mobile/Termux/Changing Termux Font\|Changing Termux Font]]
-- Unity
-	- Networking
-		- Photon
-			- [[All Published Notes/Unity/Networking/Photon/Pun/Pun Basic\|Pun Basic]]
-	- Publish
-		- Scoped Registry
-			- [[All Published Notes/Unity/Publish/Scoped Registry/How to use a Scoped Repository from Github\|How to use a Scoped Repository from Github]]
-			- [[All Published Notes/Unity/Publish/Scoped Registry/Making Scoped Registry (Theory)\|Making Scoped Registry (Theory)]]
-			- [[All Published Notes/Unity/Publish/Scoped Registry/My Step by Step Guide\|My Step by Step Guide]]
-	- Plugins
-		- [Finite State Machine](https://github.com/tglGames-Plugins/Finite-State-Machine)
-		- [Internet Access Check](https://github.com/tglGames-Plugins/Internet_Access_Check)
-		- more can be added when completed
-- Website
-	- Static
-		- Obsidian
-			- [[All Published Notes/Website/Static/Obsidian/Obsidian Publish\|Obsidian Publish]]
-
-
+* Desktop Publishing (DTP)
+	* [[All Published Notes/Desktop Publishing (DTP)/InkSpace\|InkSpace]]
+* Website
+	* Static
+		* Obsidian
+			* [[All Published Notes/Website/Static/Obsidian/Obsidian Publish\|Obsidian Publish]]
+* Hardware
+	* Mobile
+		* Termux
+			* [[All Published Notes/Hardware/Mobile/Termux/Changing Termux Font\|Changing Termux Font]]
+		* [[All Published Notes/Hardware/Mobile/Termux\|Termux]]
+	* Computer
+		* Operating System
+			* MacOS
+				* [[All Published Notes/Hardware/Computer/Operating System/MacOS/Zsh (MacOS)\|Zsh (MacOS)]]
+			* ChromeOS
+				* Remote Connections
+					* CLI
+						* [[All Published Notes/Hardware/Computer/Operating System/ChromeOS/Remote Connections/CLI/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
+			* LinuxMint
+				* Shell
+					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Shell/bash (bourne again shell)\|bash (bourne again shell)]]
+				* VPN
+					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/VPN/Using Cloudflare's Warp on Linux Mint\|Using Cloudflare's Warp on Linux Mint]]
+				* Remote Connections
+					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - TightVNC\|Creating VNC server in LinuxMint - TightVNC]]
+					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]]
+					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - x11vnc\|Creating VNC server in LinuxMint - x11vnc]]
+			* [[All Published Notes/Hardware/Computer/Operating System/Connecting Remotely\|Connecting Remotely]]
+		* Personal Changes
+			* Shell Scripts
+				* manually-loaded - *scripts made by me as there was no known default script for this*
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/list_extensions\|list_extensions]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_plugin_auto_status\|git_plugin_auto_status]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_auto_push\|git_auto_push]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/gclone\|gclone]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_status_check\|git_status_check]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_plugin_auto_push\|git_plugin_auto_push]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/Adding personal commands to system\|Adding personal commands to system]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_plugin_auto_pull\|git_plugin_auto_pull]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/identify_system\|identify_system]]
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/open_unity_project\|open_unity_project]]
+				* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
+				* auto-loaded
+					* bashrc Sub-Process
+						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]] - *colors in terminal*
+					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/Defining '.bashrc' process\|Defining '.bashrc' process]]
 
 
 
