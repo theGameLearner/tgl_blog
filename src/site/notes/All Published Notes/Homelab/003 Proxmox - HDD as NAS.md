@@ -3,7 +3,7 @@
 ---
 
 created: 2026-03-22
-updated: 2026-03-22
+updated: 2026-03-23
 
 ## Concept
 To use a HDD as a NAS, we need to have the HDD plugged in and mounted, we have done this in [[All Published Notes/Homelab/02 First Setup in Proxmox#My Hard disks are not showing up\|My Drives are not showing up]] section.
@@ -390,6 +390,14 @@ Mar 22 18:05:23 NAS-LXC systemd[1]: Started smbd.service - Samba SMB Daemon.
 root@NAS-LXC:~# 
 ```
 
+To verify, list all user accounts stored in the Samba database (SAM database):
+```sh
+root@NAS-LXC:~# pdbedit -L
+nasuser:1000:
+root@NAS-LXC:~#
+```
+
+
 #### Test connection
 Now, Samba has access to drives and can share it, we need to test it.
 
@@ -475,7 +483,284 @@ Need to figure out why?
 possible reasons:
 - my proxmox has no write access as the HDD are all NTFS
 - my container has errors in setup.
+First, let me see if I can read and write to the HDDs as root user who has all permissions:
+As *root* in *Proxmox* OS:
+```sh
+root@pve:~# df -h
+Filesystem Size Used Avail Use% Mounted on
+udev 7.5G 0 7.5G 0% /dev
+tmpfs 1.6G 1.7M 1.6G 1% /run
+/dev/mapper/pve-root 68G 5.5G 59G 9% /
+tmpfs 7.6G 40M 7.5G 1% /dev/shm
+efivarfs 128K 52K 72K 43% /sys/firmware/efi/efivars
+tmpfs 5.0M 0 5.0M 0% /run/lock
+tmpfs 1.0M 0 1.0M 0% /run/credentials/systemd-journald.service
+/dev/sda2 1022M 8.8M 1014M 1% /boot/efi
+tmpfs 7.6G 0 7.6G 0% /tmp
+/dev/sdb1 932G 532G 400G 58% /mnt/media-hhd
+/dev/sdd1 932G 797G 135G 86% /mnt/games-setup
+/dev/fuse 128M 16K 128M 1% /etc/pve
+/dev/sdc1 3.7T 220G 3.5T 6% /mnt/main-backup
+tmpfs 1.0M 0 1.0M 0% /run/credentials/getty@tty1.service
+tmpfs 1.6G 4.0K 1.6G 1% /run/user/0
+root@pve:~# namei -om /mnt/media-hhd
+f: /mnt/media-hhd
+drwxr-xr-x root root /
+drwxr-xr-x root root mnt
+drwxr-xr-x root root media-hhd
+root@pve:~# namei -om /mnt/media-games-setup
+f: /mnt/media-games-setup
+drwxr-xr-x root root /
+drwxr-xr-x root root mnt
+media-games-setup - No such file or directory
+root@pve:~# namei -om /mnt/main-backup
+f: /mnt/main-backup
+drwxr-xr-x root root /
+drwxr-xr-x root root mnt
+drwxr-xr-x root root main-backup
+root@pve:~#
+```
+
+as *root* user in *NAS-LXC*:
+```sh
+root@NAS-LXC:~# df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/mapper/pve-vm--400--disk--0 7.8G 1009M 6.4G 14% /
+/dev/sdd1 932G 797G 135G 86% /mnt/hdd-games
+/dev/sdb1 932G 532G 400G 58% /mnt/hdd-media
+/dev/sdc1 3.7T 220G 3.5T 6% /mnt/hdd-main-backup
+none 492K 4.0K 488K 1% /dev
+tmpfs 7.6G 0 7.6G 0% /dev/shm
+tmpfs 3.1G 3.2M 3.1G 1% /run
+tmpfs 5.0M 0 5.0M 0% /run/lock
+root@NAS-LXC:~# namei -om /mnt/hdd-games
+f: /mnt/hdd-games
+drwxr-xr-x root root /
+drwxr-xr-x root root mnt
+drwxr-xr-x root root hdd-games
+root@NAS-LXC:~# namei -om /mnt/hdd-media
+f: /mnt/hdd-media
+drwxr-xr-x root root /
+drwxr-xr-x root root mnt
+drwxr-xr-x root root hdd-media
+root@NAS-LXC:~# namei -om /mnt/hdd-main-backup
+f: /mnt/hdd-main-backup
+drwxr-xr-x root root /
+drwxr-xr-x root root mnt
+drwxr-xr-x root root hdd-main-backup
+root@NAS-LXC:~# sudo -u nasuser test -rxw /mnt/hdd-media && echo "Write: YES" || echo "Write: NO"
+test: missing argument after '/mnt/hdd-media'
+Write: NO
+root@NAS-LXC:~# sudo -u nasuser test -r /mnt/hdd-media && echo "Write: YES" || echo "Write: NO"
+Write: YES
+root@NAS-LXC:~# sudo -u nasuser test -r /mnt/hdd-games && echo "Write: YES" || echo "Write: NO"
+Write: YES
+root@NAS-LXC:~# sudo -u nasuser test -r /mnt/hdd-main-backup && echo "Write: YES" || echo "Write: NO"
+Write: YES
+root@NAS-LXC:~# sudo -u nasuser test -w /mnt/hdd-media && echo "Write: YES" || echo "Write: NO"
+Write: NO
+root@NAS-LXC:~# sudo -u nasuser test -w /mnt/hdd-games && echo "Write: YES" || echo "Write: NO"
+Write: NO
+root@NAS-LXC:~# sudo -u nasuser test -w /mnt/hdd-main-backup && echo "Write: YES" || echo "Write: NO"
+Write: NO
+root@NAS-LXC:~#
+``` 
+
+So, the 'Proxmox' OS's *'root' has read, write and execute permission* and for all other users (other than the owner), we only have read and execute permission. When no one but root(owner) has write permission, how can we give this permission inside 'NAS-LXC' to user 'nasuser'?
+
+Right now, the 'nasuser' with UID 1000 is the user, but files are owned by root(UID 0), that is why 'nasuser' is blocked from writing.
+
+> [!Note]
+> The way Proxmox and '*Privileged* LXC container's permissions system' works is that the user ID and permissions are mapped 1:1, so even if names are different, if the user ID is a match, the permissions are matching.
+> Meaning, if UID 1000 owns directory "path" in LXC container, any user in proxmox trying to access "path" as UID 1000 will be allowed as well.
+
+To fix this, we have 2 choices:
+- Use `force user = root` in Samba shares to make samba as root for all authenticated users.
+- Remount the drives on Proxmox with appropriate `uid`/`gid` options (Make a user group in Proxmox and let them be able to write)
+
+##### Make Samba as root to write
+- fix permissions with Samba’s `force user` in configuration which let's samba act as root user and allows us to be able to write as needed 
+	- this is a bad choice because anyone can use samba to write anything, making all permissions meaningless.
+	- All authorized users are treated as root
+```sh
+[hdd-main-backup]
+   path = /mnt/hdd-main-backup
+   browseable = yes
+   read only = no
+   guest ok = no
+   valid users = nasuser
+   write list = nasuser
+   force user = root          # <-- added
+   create mask = 0777
+   directory mask = 0777
+[hdd-media]
+   path = /mnt/hdd-media
+   browseable = yes
+   read only = no             # changed from 'yes' to allow writes for nasuser
+   guest ok = yes
+   write list = nasuser
+   force user = root          # <-- added
+   create mask = 0777
+   directory mask = 0777
+```
+
+##### Make a user group in Proxmox and let them be able to write
+Before anything is edited, let us understand the file type of all mounted drives in Proxmox:
+```sh
+root@pve:~# lsblk -f /dev/sdb1
+NAME FSTYPE FSVER LABEL     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sdb1 exfat  1.0   Movies TV 797F-72BF                             399.5G    57% /mnt/media-hhd
+root@pve:~# lsblk -f /dev/sdc1
+NAME FSTYPE FSVER LABEL       UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sdc1 exfat  1.0   4TB Main Us ED5E-0B40                               3.4T     6% /mnt/main-backup
+root@pve:~# lsblk -f /dev/sdd1
+NAME FSTYPE FSVER LABEL       UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sdd1 exfat  1.0   Games Setup EBDB-185F                             134.9G    86% /mnt/games-setup
+root@pve:~# 
+```
+All 3 Hard drives are **exfat**, this is not good as we can not use `chown` or `chmod` with 'exfat' or 'NTFS' format.
+
+> [!Note]
+> **if it's exfat or NTFS:** We have to change the mount options in the Proxmox Host's `/etc/fstab` to tell it to "pretend" the whole drive is owned by 'nasuser'.
+
+Now, we use 'mount' to understand the current owners of this drive:
+```sh
+root@pve:~# mount | grep exfat
+/dev/sdb1 on /mnt/media-hhd type exfat (rw,nosuid,nodev,relatime,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro)
+/dev/sdd1 on /mnt/games-setup type exfat (rw,nosuid,nodev,relatime,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro)
+/dev/sdc1 on /mnt/main-backup type exfat (rw,nosuid,nodev,relatime,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro)
+root@pve:~# 
+```
+
+Based on above data, all 3 drives have 755(0777-0022) permission for files(fmask) and directories(dmask). This means only owner can write and anyone else can read and execute(enter) it. As the drives are exFat and unsupported by Linux, during mount, we gave them fake permissions which we need to correct now.
+
+Now, we can create a group with write access and update in `/etc/fstab` of proxmox to give this new group write access to all mounted HDDs.
+
+in proxmox, create a new user and group:
+- User group name: 'NAS_User_Group' with GID 1000 (matching group id in NAS-LXC)
+- user name: 'NAS_User' with UID 1000 (matching user id in NAS-LXC)
+```sh
+root@pve:~# groupadd -g 1000 NAS_User_Group
+root@pve:~# useradd -u 1000 -g 1000 -M -s /usr/sbin/nologin NAS_User
+root@pve:~# id NAS_User
+uid=1000(NAS_User) gid=1000(NAS_User_Group) groups=1000(NAS_User_Group)
+root@pve:~#
+```
+As the UID and GID are a match for this PAM user, all privileged LXC will have same or less permissions on all files based on UID and GID.
+
+Now, let us change the `/etc/fstab` file.
+Old values:
+from: 
+```sh
+UUID=YOUR-UUID /mnt/media-hhd auto nosuid,nodev,nofail 0 2 
+``` 
+to: 
+```sh
+UUID=YOUR-UUID /mnt/media-hhd exfat nosuid,nodev,nofail,uid=1000,gid=1000,fmask=0000,dmask=0000 0 0 
+```
+here, we change the following:
+- auto -> exfat: as we know the file format, we will use that for easy detection and avoiding any auto-detection issues.
+- *nosuid*: Prevents a program on the HDD from running with "Root" privileges. This is a standard security best practice.
+- *nodev*: Prevents the OS from interpreting character or block special devices on the partition (stops someone from creating a "fake" hard drive interface inside your data folder).
+- *nofail*:Adding `nofail` tells Proxmox: "Try to mount this, but if it's not there, just keep booting." 
+- *uid=1000,gid=1000*: Maps the "Owner" of the entire drive to your user who has UID 1000. (The newly created group and PAM user in Proxmox).
+- **fmask/dmask=0000:** Gives full `777` permissions (Read/Write/Execute) to everyone on Proxmox, we let Ubuntu control the permissions in Samba, that is the only reason this is acceptable for the moment.
+
+> [!Warning]
+> If we ever decide to use internet to access data outside the LAN, this needs to be improved.
+
+File Data:
+```sh
+root@pve:~# cat /etc/fstab
+# <file system> <mount point> <type> <options> <dump> <pass>
+/dev/pve/root / ext4 errors=remount-ro 0 1
+UUID=2440-2998 /boot/efi vfat defaults 0 1
+/dev/pve/swap none swap sw 0 0
+proc /proc proc defaults 0 0
+
+# Media Harddrive (sdb1)
+UUID="797F-72BF" /mnt/media-hhd auto nosuid,nodev,nofail 0 2
+
+# Games Setup (sdc1)
+UUID="EBDB-185F" /mnt/games-setup auto nosuid,nodev,nofail 0 2
+
+# Main Backup (sdd1)
+UUID="ED5E-0B40" /mnt/main-backup auto nosuid,nodev,nofail 0 2
+root@pve:~# # edit the file using fresh text editor
+root@pve:~# fresh /etc/fstab
+root@pve:~# cat /etc/fstab
+# <file system> <mount point> <type> <options> <dump> <pass>
+/dev/pve/root / ext4 errors=remount-ro 0 1
+UUID=2440-2998 /boot/efi vfat defaults 0 1
+/dev/pve/swap none swap sw 0 0
+proc /proc proc defaults 0 0
+
+# Media Harddrive (sdb1)
+UUID="797F-72BF" /mnt/media-hhd exfat nosuid,nodev,nofail,uid=1000,gid=1000,fmask=0000,dmask=0000 0 0
+
+# Games Setup (sdc1)
+UUID="EBDB-185F" /mnt/games-setup exfat nosuid,nodev,nofail,uid=1000,gid=1000,fmask=0000,dmask=0000 0 0
+
+# Main Backup (sdd1)
+UUID="ED5E-0B40" /mnt/main-backup exfat nosuid,nodev,nofail,uid=1000,gid=1000,fmask=0000,dmask=0000 0 0
+root@pve:~# 
+```
+
+Now, we can either restart the machine, so the updated `/etc/fstab` is used to load the data, or we can unmount and re-mount the drives. **To unmount and re-mount, we need to stop any container or VMs that might be using them**:
+```sh
+root@pve:~# systemctl daemon-reload
+root@pve:~# umount -l /mnt/media-hhd
+root@pve:~# umount -l /mnt/games-setup
+root@pve:~# umount -l /mnt/main-backup
+root@pve:~# mount -av
+/                        : ignored
+/boot/efi                : already mounted
+none                     : ignored
+/proc                    : already mounted
+/mnt/media-hhd           : successfully mounted
+/mnt/games-setup         : successfully mounted
+/mnt/main-backup         : successfully mounted
+root@pve:~# mount | grep exfat
+/dev/sdb1 on /mnt/media-hhd type exfat (rw,nosuid,nodev,relatime,uid=1000,gid=1000,fmask=0000,dmask=0000,allow_utime=0022,iocharset=utf8,errors=remount-ro)
+/dev/sdd1 on /mnt/games-setup type exfat (rw,nosuid,nodev,relatime,uid=1000,gid=1000,fmask=0000,dmask=0000,allow_utime=0022,iocharset=utf8,errors=remount-ro)
+/dev/sdc1 on /mnt/main-backup type exfat (rw,nosuid,nodev,relatime,uid=1000,gid=1000,fmask=0000,dmask=0000,allow_utime=0022,iocharset=utf8,errors=remount-ro)
+root@pve:~# 
+root@pve:~# # restart the CT (NAS-LXC) using CLI or GUI
+root@pve:~# 
+```
+
+Now, we can restart the CT (NAS-LXC) using CLI or GUI and then test again, without logging in as 'nasuser' in ubuntu, you should be able to read but you can only write if you are 'nasuser'.
+
+Test result:
+- as a guest user (unauthorized), went to edit path to `smb://192.168.31.200/` and hit enter:
+	- can connect to 'hdd-games' and 'hdd-media' with connect button without a username or password.
+	- cannot connect to 'hdd-main-backup' without a password
+	- cannot move files in any of the drives as a guest user.
+	- can play video files from 'hdd-media' in local video player 'Haruna' in personal linux machine.
+![022 NAS guest user un-authorized action.png](/img/user/All%20Published%20Notes/Homelab/Images/022%20NAS%20guest%20user%20un-authorized%20action.png)
+- as a authorized user(nasuser on Ubuntu):
+	- can access 'hdd-main-backup' after registering as 'nasuser' and using password set in samba
+	- can create, delete and move files in any of the drives.
+![023 NAS authorize user login.png](/img/user/All%20Published%20Notes/Homelab/Images/023%20NAS%20authorize%20user%20login.png)
+
+## Configure FileBowser in Ubuntu for browser access.
+Next, if we do not want to use Nemo file explorer in the browser to login, we can use FileBowser to give a browser based access to the users in our LAN.
 #incomplete 
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
 
 
 
