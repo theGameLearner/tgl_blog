@@ -3,10 +3,10 @@
 ---
 
 created: 2026-03-22
-updated: 2026-03-23
+updated: 2026-03-25
 
 ## Concept
-To use a HDD as a NAS, we need to have the HDD plugged in and mounted, we have done this in [[All Published Notes/Homelab/02 First Setup in Proxmox#My Hard disks are not showing up\|My Drives are not showing up]] section.
+To use a HDD as a NAS, we need to have the HDD plugged in and mounted, we have done this in [[All Published Notes/Homelab/002 First Setup in Proxmox#My Hard disks are not showing up\|My Drives are not showing up]] section.
 
 Now, before we begin, we will use `df -h` to validate the drives are plugged in and mounted (`/dev/sdb1`, `/dev/sdc1`, `/dev/sdd1`):
 ```sh

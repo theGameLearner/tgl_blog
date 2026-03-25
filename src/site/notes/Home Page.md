@@ -90,10 +90,11 @@ Topics:
 						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]] - *colors in terminal*
 					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/Defining '.bashrc' process\|Defining '.bashrc' process]] - 
 * Homelab
-	* [[All Published Notes/Homelab/00 Hardware\|00 Hardware]]
-	* [[All Published Notes/Homelab/01 Installation\|01 Installation]]
-	* [[All Published Notes/Homelab/02 First Setup in Proxmox\|02 First Setup in Proxmox]]
+	* [[All Published Notes/Homelab/000 Hardware\|000 Hardware]]
+	* [[All Published Notes/Homelab/001 Installation\|001 Installation]]
+	* [[All Published Notes/Homelab/002 First Setup in Proxmox\|002 First Setup in Proxmox]]
 	* [[All Published Notes/Homelab/003 Proxmox - HDD as NAS\|003 Proxmox - HDD as NAS]]
+	* [[All Published Notes/Homelab/004 Users and groups in Proxmox\|004 Users and groups in Proxmox]]
 * Resume
 	* [[All Published Notes/Resume/Resume\|Resume]]
 * Unity
