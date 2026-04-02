@@ -30,7 +30,7 @@ Steps done:
 
 This will take some time to install and reboot. Now we get a terminal screen with pve login, as my system is named pve(`pve.lan`), i will try to login using the credentials:
 - root
-- `AeG0og*124`
+- `AeG0og*123`
 If the credentials are correct, the login screen changes to 
 ```sh
 root@pve:~# 
