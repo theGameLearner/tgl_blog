@@ -571,7 +571,7 @@ For consistency, I am installing fresh on my machine, same as proxmox.
 to start
 - suggestion by deepseek: "Create an unprivileged LXC container (e.g., Debian or Ubuntu), Mount the drives on the Proxmox host (e.g., under /mnt/diskX) and bind‑mount those directories into the container, Inside the container, install Samba/NFS and share the bind‑mounted folders"
 	- Inside the same LXC, you can run FileBrowser. Since you wanted to experiment with **Docker**, this is where you'd install Docker and run the FileBrowser container pointing to those same `/mnt/media` folders.
-This was done in next note [[All Published Notes/Homelab/003 Proxmox - HDD as NAS\|003 Proxmox - HDD as NAS]]
+This was done in next note [[All Published Notes/Homelab/003 Proxmox - Ubuntu LXC as NAS with personal HDDs\|003 Proxmox - Ubuntu LXC as NAS with personal HDDs]]
 
 
 

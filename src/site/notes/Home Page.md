@@ -93,8 +93,9 @@ Topics:
 	* [[All Published Notes/Homelab/000 Hardware\|000 Hardware]]
 	* [[All Published Notes/Homelab/001 Installation\|001 Installation]]
 	* [[All Published Notes/Homelab/002 First Setup in Proxmox\|002 First Setup in Proxmox]]
-	* [[All Published Notes/Homelab/003 Proxmox - HDD as NAS\|003 Proxmox - HDD as NAS]]
+	* [[All Published Notes/Homelab/003 Proxmox - Ubuntu LXC as NAS with personal HDDs\|003 Proxmox - Ubuntu LXC as NAS with personal HDDs]]
 	* [[All Published Notes/Homelab/004 Users and groups in Proxmox\|004 Users and groups in Proxmox]]
+	* Explore the rest using the left side menu
 * Resume
 	* [[All Published Notes/Resume/Resume\|Resume]]
 * Unity

@@ -45,10 +45,34 @@ The account is root until you create a new account:
 
 After entering the system, you can now use proxmox as a headless server without a mouse, keyboard or a monitor.
 
+#### Homelab Topics Links
 
+##### Understanding
+Points to remember or understand:
+- [[All Published Notes/Homelab/005 Impact of Changing ISP or Routers with Proxmox based Homelab\|005 Impact of Changing ISP or Routers with Proxmox based Homelab]]
+- [[All Published Notes/Homelab/006 Connecting Proxmox to Wi-Fi\|006 Connecting Proxmox to Wi-Fi]]
+- [[All Published Notes/Homelab/007 Giving names to all MAC address or Hardware\|007 Giving names to all MAC address or Hardware]]
 
+##### Services
+The services I run on my Homelab:
+- NAS
+	- I wanted a NAS option to store and retrieve files without having to connect and disconnect different Hard drives as needed.
+	- [[All Published Notes/Homelab/003 Proxmox - Ubuntu LXC as NAS with personal HDDs\|003 Proxmox - Ubuntu LXC as NAS with personal HDDs]]
+- DNS and VPN
+	- options:
+		- [Technitium](https://technitium.com/dns/): for people with good understanding and knowledge who need more control and have atleast medium level of understanding of how to manage a DNS
+			- I did not find it easy to start with
+		- [Pi-hole](https://pi-hole.net/): Easy solution for hobbyist to use directly without deep dive.
+			- It did not feel as a ready to use solution
+		- [adguard-home](https://adguard.com/en/adguard-home/overview.html): seems to be great option for ad blocking
+			- My main focus is going to be accessing remote machine using the SSH and "RustDesk".
+		- [Netbird](https://netbird.io/): Can serve as DNS as well as VPN and can also be self-hosted. This is a better alternative to TailScale as well as I have 5 email address in my family. 
+			- 
 
-
+##### Other
+Other:
+- [[All Published Notes/Homelab/004 Users and groups in Proxmox\|004 Users and groups in Proxmox]]
+- 
 
 
 ---

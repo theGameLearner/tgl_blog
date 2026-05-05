@@ -5,6 +5,8 @@
 created: 2026-03-21
 updated: 2026-03-21
 
+#data 
+
 I got a new system to make a homelab, this will have my Proxmox OS to manage all containers as needed. The Hardware specs are:
 Specs:
 - AMD ryzen 5 5600gt processor with radeon graphics(100-100001488Box)
