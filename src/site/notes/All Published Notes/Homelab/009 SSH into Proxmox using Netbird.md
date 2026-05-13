@@ -49,6 +49,10 @@ This allows SSH connection to be established by making this system an ssh server
 - **`--enable-ssh-sftp`**: Critical if you plan to use tools like WinSCP or FileZilla to move files between your Linux Mint PC and Proxmox LXCs.
 - **`--enable-ssh-local-port-forwarding`**: Allows you to tunnel services (like a web GUI running on `localhost:8006`) through an SSH connection.
 - **`--enable-ssh-root`**: (Optional) If you need to SSH directly as root. Use with caution.
+example:
+```sh
+root@DockerHost:~# sudo netbird up --allow-server-ssh --enable-ssh-root
+```
 
 We can check the status and values by seeing the detailed status `netbird status -d` for all devices connected in this netbird or by checking the default JSON file `cat /var/lib/netbird/default.json`.
 
@@ -88,7 +92,10 @@ I defined the protocol as TCP and the port was same as defined in "[[#Allow the 
 
 #### Make the connections
 
-Now we can use the default port(22) for any SSH request which is not from Netbird(`ssh root@192.168.1.101 -p 22`), or we can connect using Netbird IP or device domain name(`ssh root@100.77.214.80 -p 22022` or`ssh root@proxmox-host.netbird.cloud -p 22022`). This allows me to connect to the System even if the IP address changes due to something like Router change.
+Now we can use the default port(22) for any SSH request which is not from Netbird(`ssh root@192.168.1.101 -p 22`), or we can connect using Netbird IP or device domain name(`ssh root@100.77.214.80 -p 22022` or`ssh root@proxmox-host.netbird.cloud -p 22022`). 
+
+
+This allows me to connect to the System even if the IP address changes due to something like Router change.
 
 
 
