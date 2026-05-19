@@ -16,7 +16,11 @@ How to connect?
 
 ## Setting up portainer on LXC
 
-Portainer needs access to a volume(storage) for storing the data, so we create one named 'portainer_data': `docker volume create portainer_data`.
+Portainer needs access to a volume(storage) for storing the data, so we create one named 'portainer_data': 
+```sh
+docker volume create portainer_data
+```
+
 We want to run portainer with docker, this can be achieved by a multi-line command that tells how to run this docker:
 ```sh
 docker run -d \

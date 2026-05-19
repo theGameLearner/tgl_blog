@@ -60,6 +60,20 @@ After the update, we can try to install apps like
 - etc.
 This is to ensure the LXC has the same work flow when we need to SSH into this and when we are debugging, as we do not want new errors at that time.
 
+> [!Warning]
+> Using DHCP might be a problem in network as some docker containers like to know the IP address of the LXC in the config files.
+> I had to change it to Static IP later. (`192.168.1.100`, `172.17.0.1`, `100.77.8.142`)
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---

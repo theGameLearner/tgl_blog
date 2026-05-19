@@ -170,6 +170,52 @@ root@DockerHost:~#
 > [!Warning]
 > The package `docker-ce` automatically adds a group called 'docker'(GID: 990) for using and accessing docker, it is simpler and error-free to use this group rather than a custom group like 'dockeradmins'.
 
+So we will change our user's group to docker:
+```sh
+root@DockerHost:~# printf "%-20s %-8s %-8s %-20s %-20s\n" "USERNAME" "UID" "GID" "GROUP" "SHELL"
+printf "%-20s %-8s %-8s %-20s %-20s\n" "--------" "---" "---" "-----" "-----"
+for user in $(getent passwd | cut -d: -f1); do
+    user_info=$(getent passwd $user)
+    username=$(echo $user_info | cut -d: -f1)
+    uid=$(echo $user_info | cut -d: -f3)
+    gid=$(echo $user_info | cut -d: -f4)
+    shell=$(echo $user_info | cut -d: -f7)
+    groupname=$(getent group $gid | cut -d: -f1)
+    printf "%-20s %-8s %-8s %-20s %-20s\n" "$username" "$uid" "$gid" "$groupname" "$shell"
+done
+USERNAME             UID      GID      GROUP                SHELL               
+--------             ---      ---      -----                -----               
+root                 0        0        root                 /bin/bash           
+daemon               1        1        daemon               /usr/sbin/nologin   
+bin                  2        2        bin                  /usr/sbin/nologin   
+sys                  3        3        sys                  /usr/sbin/nologin   
+sync                 4        65534    nogroup              /bin/sync           
+games                5        60       games                /usr/sbin/nologin   
+man                  6        12       man                  /usr/sbin/nologin   
+lp                   7        7        lp                   /usr/sbin/nologin   
+mail                 8        8        mail                 /usr/sbin/nologin   
+news                 9        9        news                 /usr/sbin/nologin   
+uucp                 10       10       uucp                 /usr/sbin/nologin   
+proxy                13       13       proxy                /usr/sbin/nologin   
+www-data             33       33       www-data             /usr/sbin/nologin   
+backup               34       34       backup               /usr/sbin/nologin   
+list                 38       38       list                 /usr/sbin/nologin   
+irc                  39       39       irc                  /usr/sbin/nologin   
+_apt                 42       65534    nogroup              /usr/sbin/nologin   
+nobody               65534    65534    nogroup              /usr/sbin/nologin   
+systemd-network      998      998      systemd-network      /usr/sbin/nologin   
+systemd-timesync     997      997      systemd-timesync     /usr/sbin/nologin   
+dhcpcd               100      65534    nogroup              /bin/false          
+messagebus           101      101      messagebus           /usr/sbin/nologin   
+syslog               102      102      syslog               /usr/sbin/nologin   
+systemd-resolve      992      992      systemd-resolve      /usr/sbin/nologin   
+sshd                 103      65534    nogroup              /usr/sbin/nologin   
+postfix              104      105      postfix              /usr/sbin/nologin   
+uuidd                105      107      uuidd                /usr/sbin/nologin   
+tcpdump              106      109      tcpdump              /usr/sbin/nologin   
+dockeruser           2300     990      docker               /bin/bash           
+root@DockerHost:~# 
+```
 
 ##### Docker User permissions
 
