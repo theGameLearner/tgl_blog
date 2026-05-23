@@ -26,13 +26,58 @@ root@DockerHost:~# mkdir -p /opt/vikunja/db # for postgres SQL
 ```
 
 #### Vikunja
-When we download the 'Vikunja' image and create a container, a user with UID 1000 is considered as the main user, so we want the user to have access to these directories for read and write as this user does not have root access at any point.
-As we have created a user 'dockeruser'(UID 2300) in a group called docker(GID 990), we will give this UID the ownership of the directories we want to use:
+When we download the 'Vikunja' image and create a container, a user with *UID 1000* is considered as the main user, so we want the user to have access to these directories for read and write as this user does not have root access at any point.
+As we have created a user 'dockeruser'(*UID 2300*) in a group called docker(*GID 990*), we will give this UID the ownership of the directories we want to use:
 ```sh
 # Give Vikunja permissions (it runs as user 1000 by default)
 root@DockerHost:~# chown -R 2300:990 /opt/vikunja/files
 ```
 
+My current users:
+```sh
+root@DockerHost:~# printf "%-20s %-8s %-8s %-20s %-20s\n" "USER" "UID" "GID" "PRIMARY GROUP" "SHELL"
+printf "%-20s %-8s %-8s %-20s %-20s\n" "----" "---" "---" "-------------" "-----"
+for user in $(getent passwd | cut -d: -f1); do
+    uid=$(getent passwd $user | cut -d: -f3)
+    gid=$(getent passwd $user | cut -d: -f4)
+    group=$(getent group $gid | cut -d: -f1)
+    shell=$(getent passwd $user | cut -d: -f7)
+    printf "%-20s %-8s %-8s %-20s %-20s\n" "$user" "$uid" "$gid" "$group" "$shell"
+done
+USER                 UID      GID      PRIMARY GROUP        SHELL               
+----                 ---      ---      -------------        -----               
+root                 0        0        root                 /bin/bash           
+daemon               1        1        daemon               /usr/sbin/nologin   
+bin                  2        2        bin                  /usr/sbin/nologin   
+sys                  3        3        sys                  /usr/sbin/nologin   
+sync                 4        65534    nogroup              /bin/sync           
+games                5        60       games                /usr/sbin/nologin   
+man                  6        12       man                  /usr/sbin/nologin   
+lp                   7        7        lp                   /usr/sbin/nologin   
+mail                 8        8        mail                 /usr/sbin/nologin   
+news                 9        9        news                 /usr/sbin/nologin   
+uucp                 10       10       uucp                 /usr/sbin/nologin   
+proxy                13       13       proxy                /usr/sbin/nologin   
+www-data             33       33       www-data             /usr/sbin/nologin   
+backup               34       34       backup               /usr/sbin/nologin   
+list                 38       38       list                 /usr/sbin/nologin   
+irc                  39       39       irc                  /usr/sbin/nologin   
+_apt                 42       65534    nogroup              /usr/sbin/nologin   
+nobody               65534    65534    nogroup              /usr/sbin/nologin   
+systemd-network      998      998      systemd-network      /usr/sbin/nologin   
+systemd-timesync     997      997      systemd-timesync     /usr/sbin/nologin   
+dhcpcd               100      65534    nogroup              /bin/false          
+messagebus           101      101      messagebus           /usr/sbin/nologin   
+syslog               102      102      syslog               /usr/sbin/nologin   
+systemd-resolve      992      992      systemd-resolve      /usr/sbin/nologin   
+sshd                 103      65534    nogroup              /usr/sbin/nologin   
+postfix              104      105      postfix              /usr/sbin/nologin   
+uuidd                105      107      uuidd                /usr/sbin/nologin   
+tcpdump              106      109      tcpdump              /usr/sbin/nologin   
+dockeruser           2300     990      docker               /bin/bash           
+root@DockerHost:~# 
+
+```
 #### postgres
 When we download the 'postgres' image and create a container, the official Postgres image usually starts as **root**, performs internal setup, and then _automatically_ changes the ownership of the `/var/lib/postgresql/data` folder to its own internal `postgres` user(UID 999 inside the docker container). This means, we can skip giving access to the directory it will use as the docker user made itself part of the group which has ownership. But to avoid issues and read write permissions, we can give access as a safety measure.
 

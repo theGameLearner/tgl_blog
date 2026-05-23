@@ -7,7 +7,8 @@ created: 2025-07-29
 - [itch profile](https://thegamelearner.itch.io/)
 - Github
 	- [Main account](https://github.com/theGameLearner/)
-		- 
+		- organizations:
+			- 
 	- [publishing account](https://github.com/tglGames-Plugins)
 - [LinkedIn](https://www.linkedin.com/in/rishabh-jain-266081b7/)
 
