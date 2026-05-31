@@ -3,6 +3,14 @@
 * MODIFY THE custom-style.scss FILE INSTEAD.
 ***/
 
+html {
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: calc(var(--dg-navbar-height) + 20px);
+}
+
 body {
     /***
     * CSS VARIABLE DEFAULTS
@@ -29,8 +37,13 @@ body {
     --dg-graph-height: 250px;
     --dg-graph-border-radius: 10px;
     --dg-graph-margin-bottom: 20px;
-    --dg-graph-fullscreen-width: 600px;
-    --dg-graph-fullscreen-height: 600px;
+    --dg-graph-fullscreen-width: 90vw;
+    --dg-graph-fullscreen-height: 85vh;
+    --dg-graph-node-color: var(--text-accent);
+    --dg-graph-node-color-muted: var(--text-faint);
+    --dg-graph-label-color: var(--text-normal);
+    --dg-graph-bg: var(--background-primary);
+    --dg-graph-border-color: var(--background-secondary);
 
     /* Filetree (Left Sidebar) Variables */
     --dg-filetree-width: 250px;
@@ -41,10 +54,10 @@ body {
 
     /* TOC (Table of Contents) Variables */
     --dg-toc-padding: 5px;
-    --dg-toc-font-size: 0.9rem;
-    --dg-toc-max-height: 220px;
-    --dg-toc-title-size: 1.2rem;
-    --dg-toc-item-padding: 2px 0 2px 8px;
+    --dg-toc-font-size: 1rem;
+    --dg-toc-max-height: 70vh;
+    --dg-toc-title-size: 0.75rem;
+    --dg-toc-item-padding: 4px 0 4px 0;
     --dg-toc-indent: 1em;
 
     /* Backlinks Variables */
@@ -60,7 +73,7 @@ body {
     --dg-search-box-max-width: 90%;
     --dg-search-box-radius: 12px;
     --dg-search-box-padding: 16px;
-    --dg-search-input-size: 1.5rem;
+    --dg-search-input-size: 0.9rem;
     --dg-search-input-padding: 12px 16px;
     --dg-search-input-radius: 8px;
     --dg-search-results-max-height: 60vh;
@@ -91,6 +104,7 @@ body {
     --dg-logo-height: 40px;
     --dg-logo-height-mobile: 32px;
     --dg-logo-margin: 10px 15px;
+    --dg-filetree-logo-height: 70px;
 
     /* Note Link / File Tree Item Variables */
     --dg-notelink-padding: 4px 8px 4px 12px;
@@ -110,8 +124,6 @@ body {
     --dg-graph-ctrl-size: 0.7rem;
     --dg-graph-ctrl-icon-size: 14px;
     --dg-graph-ctrl-gap: 10px;
-    --dg-depth-slider-width: 50px;
-    --dg-depth-display-size: 1.1rem;
 
     /* Timestamps Variables */
     --dg-timestamps-size: 0.8em;
@@ -131,8 +143,8 @@ body {
     --note-icon-2: url(/img/tree-2.svg);
     --note-icon-3: url(/img/tree-3.svg);
     --note-icon-fallback: url(/img/default-note-icon.svg);
-    --graph-main: var(--text-accent);
-    --graph-muted: var(--text-muted);
+    --graph-main: var(--dg-graph-node-color);
+    --graph-muted: var(--dg-graph-node-color-muted);
 }
 
 .markdown-preview-view {
@@ -171,6 +183,109 @@ img {
     }
 }
 
+// Canvas pages: full-width layout
+.content.canvas-page {
+    max-width: none;
+    min-height: 100vh;
+    // Fill space between filetree and edge
+    margin-left: calc(var(--dg-filetree-min-width) + var(--dg-filetree-gap));
+    margin-right: 0;
+    padding-top: 0;
+
+    @media (max-width: 1000px) {
+        margin-left: 20px;
+    }
+
+    // Title hovers over canvas
+    > header {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        // Fallback for browsers without color-mix support (iOS < 16.4)
+        background: rgba(var(--background-primary-rgb, 30, 30, 30), 0.85);
+        // Modern browsers with color-mix support
+        @supports (background: color-mix(in srgb, red 50%, blue)) {
+            background: color-mix(in srgb, var(--background-primary) 85%, transparent);
+        }
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 12px 24px;
+        border-radius: 12px;
+        border: 1px solid var(--background-modifier-border);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        max-width: calc(100% - 40px);
+        text-align: center;
+
+        h1 {
+            margin: 0;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .header-meta {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--background-modifier-border);
+        }
+
+        .timestamps {
+            margin-top: 0;
+            font-size: 0.75em;
+            justify-content: center;
+            gap: 16px;
+            opacity: 0.8;
+        }
+
+        // Mobile: minimal compact title pill fixed at bottom
+        @media (max-width: 768px) {
+            position: fixed;
+            top: auto;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            max-width: calc(100% - 40px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+
+            h1 {
+                font-size: 0.95em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            // Hide metadata on mobile for cleaner look
+            .header-meta {
+                display: none;
+            }
+        }
+    }
+}
+
+// Canvas page without filetree
+body:not(:has(.filetree)) .content.canvas-page {
+    margin-left: 20px;
+}
+
+// Remove body padding for canvas pages
+body:has(.content.canvas-page) {
+    padding: 0;
+}
+
+// Filetree stays at left edge for canvas pages
+body:has(.content.canvas-page) .filetree-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: var(--dg-filetree-width);
+    justify-content: flex-start;
+}
+
+
 .external-link {
     background-position: center right;
     background-repeat: no-repeat;
@@ -188,6 +303,10 @@ img {
     padding: var(--dg-mermaid-padding);
 }
 
+.markdown-embed {
+    padding-left: 5px;
+}
+
 div.transclusion {
     position: relative;
     padding: var(--dg-transclusion-padding);
@@ -195,6 +314,23 @@ div.transclusion {
         z-index: 99;
         display: block;
         width: auto !important;
+    }
+}
+
+.youtube-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; // 16:9 aspect ratio
+    margin: 1em 0;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 8px;
     }
 }
 
@@ -222,7 +358,7 @@ ul.task-list {
     height: 100%;
     min-width: var(--dg-sidebar-min-width);
     display: flex;
-    z-index: 3;
+    z-index: 11;
     max-width: var(--dg-sidebar-max-width);
 
     .graph {
@@ -240,39 +376,19 @@ ul.task-list {
     }
 }
 
-// Fullscreen graph - outside sidebar to avoid containment issues
-.graph-fs {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: var(--dg-graph-fullscreen-width) !important;
-    height: var(--dg-graph-fullscreen-height) !important;
-    max-width: 90vw !important;
-    max-height: 90vh !important;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    display: flex !important;
-    flex-direction: column;
-    background-color: var(--background-secondary);
-    border: 1px solid var(--text-accent);
-    border-radius: var(--dg-graph-border-radius);
-    padding: var(--dg-mermaid-padding);
-
-    #link-graph {
-        width: 100% !important;
-        height: 100% !important;
-        flex: 1;
-    }
-
-    #graph-controls {
-        margin-top: 10px;
-        flex-shrink: 0;
-    }
-
-    .graph-title {
-        display: none;
-    }
+// Sidebar floats over canvas with card-like appearance
+body:has(.content.canvas-page) .sidebar {
+    left: auto;
+    right: 20px;
+    top: calc(var(--dg-navbar-height) + 20px);
+    height: auto;
+    max-height: calc(100vh - var(--dg-navbar-height) - 40px);
+    background: var(--background-primary);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
+
 
 .expand-line {
     display: flex;
@@ -295,12 +411,8 @@ ul.task-list {
 
     ol {
         list-style: none;
-        padding-left: 6px;
-        margin: 0;
-    }
-
-    & > ol {
         padding-left: 0;
+        margin: 0;
     }
 }
 
@@ -316,11 +428,11 @@ ul.task-list {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
         margin-left: 0;
-        border-left: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent);
-    }
-    // First level - no border, no indent
-    & > ul, & > ol {
         border-left: none;
+    }
+    // First level - no indent (plugin outputs nav.toc > ol)
+    nav > ol, nav > ul,
+    & > ol, & > ul {
         padding-inline-start: 0 !important;
     }
     // Override obsidian-base nested list indent
@@ -329,9 +441,16 @@ ul.task-list {
         padding: var(--dg-toc-item-padding);
         a {
             text-decoration: none;
-            color: var(--text-accent);
+            color: var(--text-normal);
             &:hover {
                 text-decoration: underline;
+            }
+            &:focus {
+                outline: none;
+            }
+            &.toc-active {
+                color: var(--text-accent);
+                font-weight: 600;
             }
         }
     }
@@ -340,12 +459,15 @@ ul.task-list {
 .toc-title-container {
     display: flex;
     justify-content: flex-start;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     .toc-title {
         font-size: var(--dg-toc-title-size) !important;
-        color: var(--h6-color);
+        color: var(--text-muted);
         width: fit-content;
         padding: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 400;
     }
 }
 
@@ -415,10 +537,17 @@ ul.task-list {
 }
 
 #link-graph {
-    background-color: var(--background-secondary);
+    background-color: var(--dg-graph-bg);
     margin-bottom: var(--dg-graph-margin-bottom);
     border-radius: var(--dg-graph-border-radius);
+    border: 1px solid var(--dg-graph-border-color);
     width: fit-content;
+
+    canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 @media (max-width: 1400px) {
@@ -519,6 +648,11 @@ ul.task-list {
         font-size: var(--dg-filetree-title-size) !important;
         flex-shrink: 0;
     }
+    .site-logo {
+        height: var(--dg-filetree-logo-height);
+        width: auto;
+        object-fit: contain;
+    }
     .search-button {
         width: 100%;
         margin: 10px 0;
@@ -558,6 +692,12 @@ ul.task-list {
         margin-right: auto;
         max-width: calc(100vw - var(--dg-filetree-width) - 50px);
     }
+
+    .content.canvas-page {
+        max-width: none;
+        margin-left: calc(var(--dg-filetree-width) + 20px);
+        margin-right: 20px;
+    }
 }
 
 // On smaller screens, filetree hides (controlled by Alpine.js at 1000px)
@@ -566,6 +706,12 @@ ul.task-list {
         margin-left: auto;
         margin-right: auto;
         max-width: var(--dg-content-max-width);
+    }
+
+    .content.canvas-page {
+        max-width: none;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
 
@@ -694,7 +840,11 @@ body.has-navbar .content {
 
 // Depth lines on filelist containers (step > 0)
 .filelist {
-    border-left: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent);
+    // Fallback for older browsers
+    border-left: 1px solid rgba(128, 128, 128, 0.4);
+    @supports (background: color-mix(in srgb, red 50%, blue)) {
+        border-left: 1px solid color-mix(in srgb, var(--text-muted) 40%, transparent);
+    }
     margin-left: var(--dg-filelist-margin);
 }
 
@@ -733,7 +883,7 @@ body.has-navbar .content {
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 15;
+    z-index: 100;
     height: 100%;
     justify-content: center;
     align-items: flex-start;
@@ -1140,11 +1290,7 @@ body.has-navbar .content {
 }
 
 .referred {
-    border: 1px dashed;
-    border-color: var(--text-accent);
-    padding: 10px;
-    margin-left: -10px;
-    margin-right: -10px;
+    border: none;
 }
 
 // Graph Controls
@@ -1162,31 +1308,44 @@ body.has-navbar .content {
 
 #full-graph {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    width: var(--dg-graph-fullscreen-width);
-    height: var(--dg-graph-fullscreen-height);
-    max-width: 90vw;
-    max-height: 90vh;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 9999;
     display: none;
-    background-color: var(--background-secondary);
-    border: 1px solid var(--text-accent);
-    border-radius: var(--dg-graph-border-radius);
-    padding: var(--dg-mermaid-padding);
+    background-color: color-mix(in srgb, var(--background-secondary) 85%, transparent);
+    backdrop-filter: blur(4px);
 
     #full-graph-container {
-        width: 100%;
-        height: calc(100% - 30px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: var(--dg-graph-fullscreen-width);
+        height: var(--dg-graph-fullscreen-height);
+        background-color: var(--dg-graph-bg);
+        border: 1px solid var(--dg-graph-border-color);
+        border-radius: var(--dg-graph-border-radius);
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
     }
 
     #full-graph-close {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 20px;
+        right: 20px;
         cursor: pointer;
-        z-index: 9;
+        z-index: 10;
+        color: var(--text-muted);
+
+        &:hover {
+            color: var(--text-normal);
+        }
     }
 }
 
@@ -1237,73 +1396,6 @@ body.has-navbar .content {
         }
     }
 
-    .depth-control {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-
-        label {
-            font-size: var(--dg-graph-ctrl-size);
-            opacity: 0.6;
-        }
-
-        .slider {
-            width: var(--dg-depth-slider-width);
-            display: flex;
-            align-items: center;
-
-            input[type="range"] {
-                width: 100%;
-                height: 4px;
-                -webkit-appearance: none;
-                appearance: none;
-                background: var(--text-muted);
-                border-radius: 2px;
-                outline: none;
-
-                &::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    appearance: none;
-                    width: 12px;
-                    height: 12px;
-                    background: var(--text-normal);
-                    border-radius: 50%;
-                    cursor: pointer;
-                }
-
-                &::-moz-range-thumb {
-                    width: 12px;
-                    height: 12px;
-                    background: var(--text-normal);
-                    border-radius: 50%;
-                    cursor: pointer;
-                    border: none;
-                }
-            }
-
-            datalist {
-                display: none;
-            }
-        }
-
-        #depth-display {
-            background-color: var(--text-accent);
-            color: var(--background-primary);
-            min-width: var(--dg-depth-display-size);
-            height: var(--dg-depth-display-size);
-            font-size: 0.65rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            font-weight: 600;
-        }
-    }
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
 }
 
 body.title-note-icon .cm-s-obsidian > header > h1[data-note-icon]::before,
@@ -1511,3 +1603,184 @@ div.dataview-error-box {
 .dataview.small-text::after {
 	content: ")";
 }
+
+/*************************/
+/** Canvas Styles       **/
+/*************************/
+
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: var(--background-primary);
+    cursor: grab;
+}
+
+.canvas-wrapper:active {
+    cursor: grabbing;
+}
+
+.canvas-wrapper.hide {
+    opacity: 0;
+}
+
+.canvas {
+    position: absolute;
+    transform-origin: 0 0;
+    will-change: transform;
+    z-index: 1;
+}
+
+.canvas-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    color: var(--text-muted);
+}
+
+.canvas-edges-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.canvas-node {
+    position: absolute;
+    border-radius: 4px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-node.has-color {
+    border-color: var(--canvas-color);
+    border-width: 2px;
+}
+
+.canvas-node-group {
+    background: var(--background-secondary-alt);
+    opacity: 0.6;
+    border-style: dashed;
+}
+
+.canvas-node-group.has-color {
+    // Fallback - uses canvas-color with reduced opacity via rgba if possible
+    background: rgba(128, 128, 128, 0.15);
+    @supports (background: color-mix(in srgb, red 50%, blue)) {
+        background: color-mix(in srgb, var(--canvas-color) 15%, transparent);
+    }
+}
+
+.canvas-node-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.canvas-node-group .canvas-node-container {
+    display: none;
+}
+
+.canvas-node-content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.canvas-node-text .canvas-node-container {
+    height: 100%;
+}
+
+.canvas-node-text-content {
+    padding: 12px;
+    white-space: pre-wrap;
+}
+
+.canvas-file-content {
+    padding: 12px;
+    height: 100%;
+}
+
+.canvas-file-iframe,
+.canvas-link-iframe,
+.canvas-youtube-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--background-primary);
+    display: block;
+}
+
+.canvas-node-file .canvas-node-content,
+.canvas-node-link .canvas-node-content {
+    height: 100%;
+    display: flex;
+}
+
+.canvas-node-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.canvas-node-image .canvas-node-container {
+    height: 100%;
+}
+
+.canvas-edge {
+    pointer-events: none;
+}
+
+.canvas-edge-label {
+    font-size: 32px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.canvas.small-scale .canvas-node-label,
+.canvas.small-scale .canvas-node-text-content,
+.canvas.small-scale .canvas-edge-label {
+    display: none;
+}
+
+.canvas-hints {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    padding: 8px 16px;
+    background: var(--background-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 13px;
+    color: var(--text-muted);
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.canvas-hints.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.canvas-hints kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-family: inherit;
+    background: var(--background-secondary);
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+    margin-right: 4px;
+}
+
+@import "obsidian-bases";
