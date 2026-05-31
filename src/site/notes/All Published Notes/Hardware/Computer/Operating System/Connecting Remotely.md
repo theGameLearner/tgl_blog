@@ -3,7 +3,7 @@
 ---
 
 created: 2025-08-27
-updated: 2025-11-22
+updated: 2026-05-05
 ### Requirements
 To follow this theory, you will need:
 - A machine which is up and running which we want to access with remote connection.
@@ -118,8 +118,10 @@ To use:
 		- SSH
 			- [[All Published Notes/Hardware/Computer/Operating System/ChromeOS/Remote Connections/CLI/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]] - highlighting Chromebook as it is not commonly seen in searches.
 - **Third party solution**
-	- RustDesk - [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]]
+	- ~~RustDesk~~ - [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]]
 		- best for LAN or same Wi-Fi connection.
+		- Has started asking a account, have not re-tested.
+	- [NoMachine](https://www.nomachine.com/) - Alternative to RustDesk, can allow systems in same LAN (real or virtual) to connect and share screen and audio.
 
 
 
