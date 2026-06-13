@@ -3,11 +3,13 @@
 ---
 
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-06-13
 
 Given that I have external drives and I want my data stored in external drives as a backup in case my main hard-disk collapses, I will make a folder to backup only my data files for vikunja that we made earlier[^1].
 
 ### Creating a folder to hold backup
+
+First, we need a folder in which all backups will be moved to, this folder should exist in the LXC as well as be mapped to a main folder inside my hard-drive. But to do this, we need the LXC to be in 'stopped' state or in simpler words, the *LXC should be shut down*.
 
 I want to use '/dev/sdb1' drive, which is mounted as '/mnt/main-backup' in my machine for my backups.
 
@@ -42,6 +44,9 @@ root@pve:~# # This maps the host backup folder to '/backup' inside LXC 401
 root@pve:~# pct set 401 -mp0 /mnt/main-backup/homelab_backups/vikunja_lxc_backup,mp=/backup
 root@pve:~# 
 ```
+
+> [!Warning]
+> `mp0` is for 0th mounting point, if it is in use, we can change to `mp1` or any other which is unused. It all works the same. To see all mount points in use, we can check it in proxmox in config of each pct.
 
 So now, my Ubuntu LXC has 2 folders at the root level 
 - `/backup`: to store backup which is a link to store in main host's '/mnt/main-backup' folder decided by the proxmox host
@@ -187,62 +192,17 @@ In the crontab opened, add this line:
 
 This ensures the task runs on every LXC re-boot. This way before docker or portainer can start, we will take backups.
 
-##### Changing default EDITOR available in terminal
-This is a side track and can be completely skipped.
-By default, we only get limited choices for file editors in the terminal, for this I always use 'Fresh' as I loved the ease of file editing given by it.
+
+Additional:
+> [!Note]
+> If we are mounting lot of paths and need to check which LXC is mounted to which folder, we can use `pct config 401 | grep mp` to get data about all pct configurations that have mount points.
+
 ```sh
-root@DockerHost:~# crontab -e
-no crontab for root - using an empty one
-
-Select an editor.  To change later, run 'select-editor'.
-  1. /bin/nano        <---- easiest
-  2. /usr/bin/vim.tiny
-  3. /bin/ed
-
-Choose 1-3 [1]: 3   
-889
-^C
-?
-exit
-?
-q
-crontab: "/usr/bin/sensible-editor" exited with status 1
-root@DockerHost:~# 
-root@DockerHost:~# 
-root@DockerHost:~# which fresh
-/bin/fresh
-root@DockerHost:~# select-editor
-
-Select an editor.  To change later, run 'select-editor'.
-  1. /bin/nano        <---- easiest
-  2. /usr/bin/vim.tiny
-  3. /bin/ed
-
-Choose 1-3 [1]: 1
-root@DockerHost:~# echo 'export EDITOR="/bin/fresh"' >> ~/.bashrc && source ~/.bashrc
-root@DockerHost:~# select-editor
-
-Select an editor.  To change later, run 'select-editor'.
-  1. /bin/nano        <---- easiest
-  2. /usr/bin/vim.tiny
-  3. /bin/ed
-
-Choose 1-3 [1]: 1
-root@DockerHost:~# 
-root@DockerHost:~# # remove the options so we can force our choice as the only choice.
-root@DockerHost:~# rm -f ~/.selected_editor
-root@DockerHost:~# echo 'export VISUAL="/bin/fresh"' >> ~/.bashrc
-root@DockerHost:~# source ~/.bashrc
-root@DockerHost:~# # now the 'crontab -e' command will open the file in fresh editor.
-root@DockerHost:~# crontab -e
-no crontab for root - using an empty one
-crontab: installing new crontab
-root@DockerHost:~# # after saving the file changes, we will return here
-root@DockerHost:~# 
+root@pve:~# pct config 401 | grep mp
+mp0: /mnt/main-backup/homelab_backups/vikunja_lxc_backup,mp=/vikunja_backup
+mp1: /mnt/main-backup/homelab/apps,mp=/apps
+root@pve:~#
 ```
-
-Now, my system always opens all files in fresh instead of giving me outdated choices.
-
 
 
 
