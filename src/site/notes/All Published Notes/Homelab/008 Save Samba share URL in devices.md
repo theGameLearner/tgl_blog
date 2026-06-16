@@ -65,6 +65,9 @@ Ensure the Netbird is connected on the device where we want to use this Samba fi
 Install an app that allows to create and save SMB urls (like CX File Explorer). Add a new SMB connection with the same local cloud URL `smb://nas-lxc.netbird.cloud`, this works (the movie files cannot be streamed easily on phone which might be an issue with the format of video or device compatibility). Alternatively, we can try to use the actual IP address instead of the Netbird custom name(`smb://192.168.1.200/`) and we can still access the files.
 
 
+See Also: 
+- [[All Published Notes/Homelab/015 Managing local DNS in my homelab\|015 Managing local DNS in my homelab]]
+
 
 ---
 
