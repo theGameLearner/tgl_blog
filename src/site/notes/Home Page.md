@@ -91,11 +91,7 @@ Topics:
 					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/Defining '.bashrc' process\|Defining '.bashrc' process]] - 
 * Homelab
 	* [[All Published Notes/Homelab/000 Hardware\|000 Hardware]]
-	* [[All Published Notes/Homelab/001 Installation\|001 Installation]]
-	* [[All Published Notes/Homelab/002 First Setup in Proxmox\|002 First Setup in Proxmox]]
-	* [[All Published Notes/Homelab/003 Proxmox - Ubuntu LXC as NAS with personal HDDs\|003 Proxmox - Ubuntu LXC as NAS with personal HDDs]]
-	* [[All Published Notes/Homelab/004 Users and groups in Proxmox\|004 Users and groups in Proxmox]]
-	* Explore the rest using the left side menu
+		* Explore the rest using the left side menu
 * Resume
 	* [[All Published Notes/Resume/Resume\|Resume]]
 * Unity

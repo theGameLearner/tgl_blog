@@ -66,7 +66,7 @@ Install an app that allows to create and save SMB urls (like CX File Explorer). 
 
 
 See Also: 
-- [[All Published Notes/Homelab/015 Managing local DNS in my homelab\|015 Managing local DNS in my homelab]]
+- [[All Published Notes/Homelab/015 Managing custom DNS in my homelab\|015 Managing custom DNS in my homelab]]
 
 
 ---
