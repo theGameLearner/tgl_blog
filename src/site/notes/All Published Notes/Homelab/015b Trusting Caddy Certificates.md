@@ -799,6 +799,7 @@ Everytime a new domain needs to be added we need to update 2 files, given that c
 
 ##### Issue 02:
 We have disabled IPv6 DNS from the machine, but it is the standard DNS for most machines, we can create another IPv6 DNS in the containers, but that is beyond what we are doing here.
+We can use the domain itself to direct the traffic to the desired IP without changing any DNS setting. See: [[All Published Notes/Homelab/015c Making Domain accessible publically\|015c Making Domain accessible publically]]
 
 
 
