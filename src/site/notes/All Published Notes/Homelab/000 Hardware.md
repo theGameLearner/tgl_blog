@@ -42,7 +42,7 @@ All Services created and logs of them:
 - [[All Published Notes/Homelab/014 Setting a new default terminal text editor(Fresh)\|014 Setting a new default terminal text editor(Fresh)]]
 - [[All Published Notes/Homelab/015 Managing custom DNS in my homelab\|015 Managing custom DNS in my homelab]]
 	- [[All Published Notes/Homelab/015b Trusting Caddy Certificates\|015b Trusting Caddy Certificates]]
-- [[All Published Notes/Homelab/Creating a drive for LAN\|Creating a drive for LAN]]
+- [[Creating a drive for LAN\|Creating a drive for LAN]]
 
 
 

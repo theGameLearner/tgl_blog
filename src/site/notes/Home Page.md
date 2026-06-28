@@ -31,6 +31,10 @@ See My better projects:
 	- [inertial velocity](https://vjs22334.itch.io/inertial-velocity) - Unity game made with friends
 - website
 	- [tgl_blog](https://github.com/theGameLearner/tgl_blog) - this website's git repository which is writtten in [Obsidian](https://obsidian.md/) and published using [Digital Garden](https://github.com/oleeskild/Obsidian-digital-garden) and Vercel
+- Services
+	- My Homelab based services are not accessible publically
+- Terminal Commands
+	- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 - 
 
 ### Content
@@ -45,50 +49,50 @@ Topics:
 			* [[All Published Notes/Website/Static/Obsidian/Obsidian Publish\|Obsidian Publish]]
 * Hardware
 	* Mobile
-		* [[All Published Notes/Hardware/Mobile/Termux\|Termux]]
+		* [[All Published Notes/Software/Mobile/Termux\|Termux]]
 		* Termux
-			* [[All Published Notes/Hardware/Mobile/Termux/Changing Termux Font\|Changing Termux Font]]
+			* [[All Published Notes/Software/Mobile/Termux/Changing Termux Font\|Changing Termux Font]]
 	* Computer
 		* Operating System
-			* [[All Published Notes/Hardware/Computer/Operating System/Connecting Remotely\|Connecting Remotely]]
+			* [[All Published Notes/Software/Computer/Operating System/Connecting Remotely\|Connecting Remotely]]
 			* MacOS
-				* [[All Published Notes/Hardware/Computer/Operating System/MacOS/Zsh (MacOS)\|Zsh (MacOS)]]
+				* [[All Published Notes/Software/Computer/Operating System/MacOS/Zsh (MacOS)\|Zsh (MacOS)]]
 			* ChromeOS
 				* Remote Connections
 					* CLI
-						* [[All Published Notes/Hardware/Computer/Operating System/ChromeOS/Remote Connections/CLI/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
+						* [[All Published Notes/Software/Computer/Operating System/ChromeOS/Remote Connections/CLI/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
 			* LinuxMint
 				* Shell
-					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Shell/bash (bourne again shell)\|bash (bourne again shell)]]
+					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Shell/bash (bourne again shell)\|bash (bourne again shell)]]
 				* VPN
-					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/VPN/Using Cloudflare's Warp on Linux Mint\|Using Cloudflare's Warp on Linux Mint]]
+					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/VPN/Using Cloudflare's Warp on Linux Mint\|Using Cloudflare's Warp on Linux Mint]]
 				* Remote Connections
-					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - TightVNC\|Creating VNC server in LinuxMint - TightVNC]]
-					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]]
-					* [[All Published Notes/Hardware/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - x11vnc\|Creating VNC server in LinuxMint - x11vnc]]
+					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - TightVNC\|Creating VNC server in LinuxMint - TightVNC]]
+					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]]
+					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - x11vnc\|Creating VNC server in LinuxMint - x11vnc]]
 		* Personal Changes
 			* Shell Scripts
-				* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
+				* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 				* manually-loaded - *custom command scripts made by me as there was no known default script for this*
 					* OS Level
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/identify_system\|identify_system]] - identifies the system
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/Adding personal commands to system\|Adding personal commands to system]] - how to add user defined commands to the system
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/identify_system\|identify_system]] - identifies the system
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/Adding personal commands to system\|Adding personal commands to system]] - how to add user defined commands to the system
 					* Folder level scripts
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/list_extensions\|list_extensions]] - lists all extensions in a folder
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/list_extensions\|list_extensions]] - lists all extensions in a folder
 					* Git
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_auto_push\|git_auto_push]] - automatically stages, commits and pushes all changes with auto commit messages
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/gclone\|gclone]] - clones a repo using the git config file and multiple ssh
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_status_check\|git_status_check]] - checks all git repo recursively in child directories and checks status
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_auto_push\|git_auto_push]] - automatically stages, commits and pushes all changes with auto commit messages
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/gclone\|gclone]] - clones a repo using the git config file and multiple ssh
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_status_check\|git_status_check]] - checks all git repo recursively in child directories and checks status
 						* *git_plugin commands* - for git plugin folder, when local and remote has different folder names
-							* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_plugin_auto_status\|git_plugin_auto_status]] - check status of the repo 
-							* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_plugin_auto_push\|git_plugin_auto_push]] - push the changes
-							* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/git_plugin_auto_pull\|git_plugin_auto_pull]] - pull the changes
+							* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_status\|git_plugin_auto_status]] - check status of the repo 
+							* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_push\|git_plugin_auto_push]] - push the changes
+							* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_pull\|git_plugin_auto_pull]] - pull the changes
 					* Unity
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/manually-loaded/open_unity_project\|open_unity_project]] - opens a project in Unity editor
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/open_unity_project\|open_unity_project]] - opens a project in Unity editor
 				* auto-loaded
 					* bashrc Sub-Process
-						* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]] - *colors in terminal*
-					* [[All Published Notes/Hardware/Computer/Personal Changes/Shell Scripts/auto-loaded/Defining '.bashrc' process\|Defining '.bashrc' process]] - 
+						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]] - *colors in terminal*
+					* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/Defining '.bashrc' process\|Defining '.bashrc' process]] - 
 * Homelab
 	* [[All Published Notes/Homelab/000 Hardware\|000 Hardware]]
 		* Explore the rest using the left side menu
