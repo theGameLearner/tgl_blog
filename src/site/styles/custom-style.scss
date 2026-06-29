@@ -1,4 +1,202 @@
 /***
+ * ─── 1. GRID LAYOUT ────────────────────────────────────────────────────────────
+ *   Left (280px) | Middle (1fr) | Right (280px)
+ ***/
+.note-body {
+    display: grid !important;
+    grid-template-columns: 280px 1fr 280px !important;
+    gap: 2rem !important;               /* comfortable, not too tight, not too loose */
+    max-width: 1500px !important;
+    margin: 0 auto !important;
+    padding: 1.5rem !important;
+    box-sizing: border-box !important;
+    align-items: start !important;
+}
+
+/***
+ * ─── 2. LEFT SIDEBAR – Logo on top, file tree below ──────────────────────────
+ ***/
+nav.filetree-sidebar {
+    grid-column: 1 !important;
+    position: sticky !important;
+    top: 1.5rem !important;
+    height: calc(100vh - 3rem) !important;
+    overflow-y: auto !important;
+    padding: 8rem 1rem 2rem 1rem !important; /* ← top padding makes room for logo */
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+}
+
+/* Logo – placed at the top of the left sidebar */
+nav.filetree-sidebar::before {
+    content: "" !important;
+    display: block !important;
+    width: 110px !important;
+    height: 110px !important;
+    position: absolute !important;
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    z-index: 10 !important;
+}
+
+/***
+ * ─── 3. RIGHT SIDEBAR – Graph on top, outline below ──────────────────────────
+ ***/
+.right-sidebar {
+    grid-column: 3 !important;
+    position: sticky !important;
+    top: 1.5rem !important;
+    height: calc(100vh - 3rem) !important;
+    overflow-y: auto !important;
+    padding: 1rem 0 !important;           /* no extra space around */
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+}
+
+/* Force the graph to appear first */
+.right-sidebar .graph-container {
+    order: -1 !important;
+    margin: 0 !important;
+}
+
+/* Outline (TOC) comes below the graph */
+.right-sidebar .toc {
+    order: 0 !important;
+    margin: 0 !important;
+}
+
+/***
+ * ─── 4. MIDDLE CONTENT – expands fully, no cutting ──────────────────────────
+ ***/
+.content {
+    grid-column: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;    /* no restriction, fills the space */
+    padding: 1rem 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;   /* prevents hidden text */
+}
+
+/* Reset all text alignment so it sits flush */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content p,
+.content ul,
+.content ol,
+.content div {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/***
+ * ─── 5. NAVBAR ICON (small icon in the top bar) ──────────────────────────────
+ ***/
+nav.navbar .navbar-inner h1::before {
+    content: " " !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+}
+
+/***
+ * ─── 6. CODE BLOCKS – line numbers & highlights ──────────────────────────────
+ ***/
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+}
+
+.line-numbers-rows {
+    position: absolute !important;
+    pointer-events: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 3em !important;
+    border-right: 1px solid #3e4451 !important;
+    user-select: none !important;
+}
+
+.line-numbers-rows > span {
+    display: block !important;
+    counter-increment: linenumber !important;
+}
+
+.line-numbers-rows > span::before {
+    content: counter(linenumber) !important;
+    color: #5c6370 !important;
+    display: block !important;
+    padding-right: 0.8em !important;
+    text-align: right !important;
+}
+
+.line-highlight {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 !important;
+    margin-top: 1em !important;
+    background: rgba(154, 107, 214, 0.15) !important;
+    pointer-events: none !important;
+    line-height: inherit !important;
+    white-space: pre !important;
+}
+
+/***
+ * ─── 7. RESPONSIVE – stack on small screens ──────────────────────────────────
+ ***/
+@media screen and (max-width: 1150px) {
+    .note-body {
+        display: block !important;
+        padding: 0 1rem !important;
+    }
+
+    nav.filetree-sidebar,
+    .right-sidebar {
+        position: relative !important;
+        height: auto !important;
+        top: auto !important;
+        padding: 1rem 0 !important;
+        overflow-y: visible !important;
+        width: 100% !important;
+    }
+
+    /* On mobile, keep logo smaller and centered */
+    nav.filetree-sidebar {
+        padding-top: 6rem !important;
+    }
+
+    nav.filetree-sidebar::before {
+        width: 80px !important;
+        height: 80px !important;
+        top: 0.5rem !important;
+    }
+
+    .content {
+        padding: 1rem 0 !important;
+    }
+}/***
  * ─── 1. GRID LAYOUT ─────────────────────────────────────────────────────────────
  *   Three‑column grid: left sidebar | main content | right sidebar
  ***/
