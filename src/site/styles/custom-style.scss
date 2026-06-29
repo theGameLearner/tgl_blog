@@ -1,4 +1,161 @@
 /***
+  1. FIXING THE 3-COLUMN ABSOLUTE RESPONSIVENESS
+***/
+
+/* Reset main structural layout constraints */
+.container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important; /* Disables the broken flexbox overlay */
+}
+
+/* Fix the Main Content Column.
+  By assigning explicit side margins, the text area automatically resizes 
+  in the center space without ever colliding with the floating panels.
+*/
+.content {
+    max-width: 850px !important;
+    margin-left: 320px !important;  /* Creates an unbreachable wall protecting the left side */
+    margin-right: 340px !important; /* Creates an unbreachable wall protecting the right side */
+    padding: 3rem 2rem !important;
+    box-sizing: border-box !important;
+}
+
+/* Force Left Sidebar to snap clean against the leftmost browser edge */
+nav.filetree-sidebar {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 280px !important;
+    height: 100vh !important;
+    padding: 11rem 1.5rem 2rem 1.5rem !important; /* Leaves room above folders for your logo */
+    box-sizing: border-box !important;
+    border-right: 1px solid #222222;
+    overflow-y: auto !important;
+    z-index: 99;
+}
+
+/* Force Right Column components to align and snap clean to the right edge */
+.right-sidebar, .toc, .backlinks, .graph-container {
+    position: fixed !important;
+    right: 0 !important;
+    width: 300px !important;
+    box-sizing: border-box !important;
+    z-index: 99;
+}
+
+/* Stack individual right components accurately vertically */
+.toc {
+    top: 3rem !important;
+    height: 45vh !important;
+    overflow-y: auto !important;
+}
+
+.graph-container {
+    top: 50vh !important;
+    height: 25vh !important;
+}
+
+.backlinks {
+    top: 77vh !important;
+    height: 20vh !important;
+}
+
+/***
+  2. PERMANENT LOGO REFIX
+***/
+
+/* Render the logo relative to the fixed left sidebar container frame */
+nav.filetree-sidebar::before { 
+    content: "";
+    display: block;
+    width: 130px; 
+    height: 130px;
+    position: fixed; /* Ensures it stays visible on top when scrolling folders */
+    top: 1.5rem;
+    left: 75px; /* Adjust this value if you want to shift it left or right */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
+    z-index: 100;
+}
+
+/* Mini navigation icon adjustment */
+nav.navbar .navbar-inner h1::before {
+    content: " ";
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png");
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/***
+  3. MEDIA RESPONSIVENESS (MOBILE AND TABLET VIEWPORTS)
+***/
+@media screen and (max-width: 1150px) {
+    /* When the browser window gets narrow, eliminate side margins to fit text comfortably */
+    .content {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+        max-width: 100% !important;
+        padding-top: 5rem !important;
+    }
+}
+
+
+/***
+  4. CODE BLOCKS: LINE NUMBERS & LINE HIGHLIGHTS
+***/
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+}
+
+.line-numbers-rows {
+    position: absolute !important;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: 0;
+    width: 3em; 
+    letter-spacing: -1px;
+    border-right: 1px solid #3e4451; 
+    user-select: none;
+}
+
+.line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #5c6370; 
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+.line-highlight {
+    position: absolute !important;
+    left: 0;
+    right: 0;
+    padding: 0;
+    margin-top: 1em; 
+    background: rgba(154, 107, 214, 0.15) !important; 
+    pointer-events: none;
+    line-height: inherit;
+    white-space: pre;
+}/***
   1. REPAIRING THE 3-COLUMN FLEX LAYOUT
 ***/
 
