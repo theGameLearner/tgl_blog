@@ -1,70 +1,67 @@
 /***
-  1. FIXING THE GLOBAL STRUCTURE & GRAPH OVERLAYS
+  1. FIXING THE GLOBAL CONTAINER & COLLISION RESPONSIVENESS
 ***/
 
-/* Give the main content area breathing room and allow it to scale wider */
-.content {
-    max-width: 1100px !important; /* Expands the page column width */
-    width: 100% !important;
+/* Safely allow the whole layout grid to expand on large viewports */
+.container {
+    max-width: 1400px !important; 
     margin: 0 auto !important;
-    padding: 2em 3em !important;
+    display: flex !important;
+    justify-content: space-between;
 }
 
-/* Force left sidebar to stick cleanly to the far left edge of the screen */
-nav.filetree-sidebar {
-    position: fixed !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 280px !important; /* Set standard structural width */
-    height: 100vh !important;
-    padding: 9em 1.5em 2em 1.5em !important; /* Leaves room perfectly for the logo above it */
+/* Ensure the main document content box scales cleanly without breaking columns */
+.content {
+    max-width: 850px !important; 
+    width: 100% !important;
+    padding: 2em 1.5em !important;
     box-sizing: border-box;
-    z-index: 10;
-    overflow-y: auto;
+    flex-grow: 1;
 }
 
-/* Fix the right-side Graph/TOC panels so they don't squash into the center content */
+/* Make sure right-hand features (TOC / Graph / Backlinks) behave predictably */
+.right-sidebar {
+    width: 280px !important;
+    min-width: 250px;
+    box-sizing: border-box;
+}
+
+/* Clean up overlapping visual clutter in the right column */
 .toc, .backlinks, .graph-container {
-    position: fixed !important;
-    right: 0 !important;
-    top: 0 !important;
-    width: 300px !important;
-    height: 100vh !important;
-    padding: 3em 1.5em !important;
-    box-sizing: border-box;
-    z-index: 10;
-    overflow-y: auto;
-}
-
-/* Compensate main layout spacing so it doesn't get covered by fixed sidebars */
-@media screen and (min-width: 1200px) {
-    body {
-        padding-left: 290px !important;
-        padding-right: 310px !important;
-    }
+    margin-bottom: 2rem !important;
+    position: relative !important; 
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    height: auto !important;
 }
 
 /***
-  2. FIXING THE TOP-LEFT LOGO BEHAVIOR
+  2. RESPONSIVE SIDEBAR LOGO
 ***/
 
-/* Isolate the logo pseudo-element relative to the structural parent wrapper */
+/* Target the structural wrapper of the left folder structure */
+nav.filetree-sidebar {
+    width: 260px !important;
+    min-width: 240px;
+    padding-top: 1em !important; /* Reset layout padding */
+    box-sizing: border-box;
+}
+
+/* Insert the large logo nicely above the folder navigation tree */
 nav.filetree-sidebar::before { 
     content: "";
     display: block;
-    width: 140px; /* Custom image render box width */
-    height: 140px; /* Custom image render box height */
-    position: fixed; /* Fixes position relative to viewport, not scrolling text */
-    top: 1.5em;
-    left: 45px; /* Adjust left offset horizontally until perfectly aligned over your text */
+    width: 120px; 
+    height: 120px;
+    margin: 0 auto 1.5em auto; /* Centers the logo and leaves space below it */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
-    z-index: 100; /* Stays statically on top */
 }
 
-/* Small inline icon fix inside your top navigation text wrapper */
+/* Clean up small navigation bar styling items */
 nav.navbar .navbar-inner h1::before {
     content: " ";
     display: inline-block;
@@ -73,23 +70,24 @@ nav.navbar .navbar-inner h1::before {
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("/img/user/Images/Logo/Tgl logo.png");
-    margin-right: 5px;
-    background-position: bottom;
+    margin-right: 8px;
+    vertical-align: middle;
 }
 
 
 /***
-  3. CODE BLOCK: LINE NUMBERS & LINE HIGHLIGHTS
+  3. CODE BLOCKS: CODE STYLER FORMATTING (LINE NUMBERS & HIGHLIGHTS)
 ***/
 
-/* Standardize layout sizing inside Prism wrapper code containers */
+/* Standardize layout viewport inside code containers */
 pre[class*="language-"] {
     position: relative !important;
     padding-left: 3.8em !important;
     overflow-x: auto;
+    border-radius: 6px;
 }
 
-/* Line structure generator hookup */
+/* Line structure generation */
 .line-numbers-rows {
     position: absolute;
     pointer-events: none;
@@ -98,7 +96,7 @@ pre[class*="language-"] {
     left: 0;
     width: 3em; 
     letter-spacing: -1px;
-    border-right: 1px solid #333333; 
+    border-right: 1px solid #3e4451; 
     user-select: none;
 }
 
@@ -115,14 +113,14 @@ pre[class*="language-"] {
     text-align: right;
 }
 
-/* Visual highlighters */
+/* Line Highlighter configuration */
 .line-highlight {
     position: absolute;
     left: 0;
     right: 0;
     padding: 0;
     margin-top: 1em; 
-    background: rgba(154, 107, 214, 0.15) !important; /* Subtle Code-Styler tint style */
+    background: rgba(154, 107, 214, 0.15) !important; 
     pointer-events: none;
     line-height: inherit;
     white-space: pre;
