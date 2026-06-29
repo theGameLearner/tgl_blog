@@ -1,53 +1,129 @@
-body {
-    /***
-      ADD YOUR CUSTOM STYLING HERE. (INSIDE THE body {...} section.)
-      IT WILL TAKE PRECEDENCE OVER THE STYLING IN THE STYLE.CSS FILE.
-   ***/
-    //  background-color: white;
-    //  .content {
-    //   font-size: 14px;
-    //  }
-    //  h1 {
-    //   color: black;
-    //  }
+/***
+  1. FIXING THE GLOBAL STRUCTURE & GRAPH OVERLAYS
+***/
+
+/* Give the main content area breathing room and allow it to scale wider */
+.content {
+    max-width: 1100px !important; /* Expands the page column width */
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 2em 3em !important;
 }
 
-// Add a logo on top left of the screen above filetree sidebar
+/* Force left sidebar to stick cleanly to the far left edge of the screen */
 nav.filetree-sidebar {
-  top: 3em; // padding from the top of the page
-  padding-top: 7em; // content of this div will leave space to show the logo above the top bar
-  height: calc(100% - 7em); // Adjust height of the filetree-sidebar accordingly
-  h1::before { 
-    content: " ";
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 280px !important; /* Set standard structural width */
+    height: 100vh !important;
+    padding: 9em 1.5em 2em 1.5em !important; /* Leaves room perfectly for the logo above it */
+    box-sizing: border-box;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+/* Fix the right-side Graph/TOC panels so they don't squash into the center content */
+.toc, .backlinks, .graph-container {
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+    width: 300px !important;
+    height: 100vh !important;
+    padding: 3em 1.5em !important;
+    box-sizing: border-box;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+/* Compensate main layout spacing so it doesn't get covered by fixed sidebars */
+@media screen and (min-width: 1200px) {
+    body {
+        padding-left: 290px !important;
+        padding-right: 310px !important;
+    }
+}
+
+/***
+  2. FIXING THE TOP-LEFT LOGO BEHAVIOR
+***/
+
+/* Isolate the logo pseudo-element relative to the structural parent wrapper */
+nav.filetree-sidebar::before { 
+    content: "";
     display: block;
-    width: 100%;
-    height: 4em; // This is the height of your logo image
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-bottom: 0.5em; // Space between logo and text
-    // Image properties
+    width: 140px; /* Custom image render box width */
+    height: 140px; /* Custom image render box height */
+    position: fixed; /* Fixes position relative to viewport, not scrolling text */
+    top: 1.5em;
+    left: 45px; /* Adjust left offset horizontally until perfectly aligned over your text */
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("/img/user/Images/Logo/Tgl logo.png");  // URL of the image being used in the sidebar
     background-position: center;
-    
-  }
+    background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
+    z-index: 100; /* Stays statically on top */
 }
 
-// Add a logo in the browser's tab for this page
-nav.navbar {
-  .navbar-inner {
-    h1::before {
-      content: " ";
-      display: inline-block;
-      width: 1em;
-      height: 1.2em;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-image: url("/img/user/Images/Logo/Tgl logo.png");
-      margin-right: 5px;
-      background-position: bottom;
-    }
-  }
+/* Small inline icon fix inside your top navigation text wrapper */
+nav.navbar .navbar-inner h1::before {
+    content: " ";
+    display: inline-block;
+    width: 1em;
+    height: 1.2em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png");
+    margin-right: 5px;
+    background-position: bottom;
+}
+
+
+/***
+  3. CODE BLOCK: LINE NUMBERS & LINE HIGHLIGHTS
+***/
+
+/* Standardize layout sizing inside Prism wrapper code containers */
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto;
+}
+
+/* Line structure generator hookup */
+.line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: 0;
+    width: 3em; 
+    letter-spacing: -1px;
+    border-right: 1px solid #333333; 
+    user-select: none;
+}
+
+.line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #5c6370; 
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+/* Visual highlighters */
+.line-highlight {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 0;
+    margin-top: 1em; 
+    background: rgba(154, 107, 214, 0.15) !important; /* Subtle Code-Styler tint style */
+    pointer-events: none;
+    line-height: inherit;
+    white-space: pre;
 }
