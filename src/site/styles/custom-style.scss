@@ -1,4 +1,113 @@
 /***
+  1. CLEAN RE-ALIGNMENT OF GLOBAL RESPONSIVE CONTAINERS
+***/
+
+/* Reset block constraints to match standard fluid breakpoints safely */
+.content {
+    max-width: 840px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure headings line up exactly with body copy across all monitor widths */
+.content h1, .content h2, .content h3, .content p, .content ul, .content ol {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/***
+  2. PERMANENT TOP-LEFT SIDEBAR LOGO
+***/
+
+/* Give the file tree sidebar safe vertical space above the folder paths */
+nav.filetree-sidebar {
+    padding-top: 10.5rem !important;
+    box-sizing: border-box !important;
+}
+
+/* By attaching the logo to the inner scrolling container as an absolute-positioned block,
+  it stays pinned exactly over your "TGL Blog" header without overlapping anything else.
+*/
+nav.filetree-sidebar::before { 
+    content: "";
+    display: block;
+    width: 120px; 
+    height: 120px;
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem; /* Matches the theme's standard internal left padding */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
+    z-index: 50;
+}
+
+/* Inline navbar brand alignment adjustments */
+nav.navbar .navbar-inner h1::before {
+    content: " ";
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png");
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/***
+  3. CODE BLOCKS: CODE STYLER RENDERING
+***/
+
+/* Apply gutters inside code block structures for line counts */
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+}
+
+/* Numeric vertical tracks */
+.line-numbers-rows {
+    position: absolute !important;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: 0;
+    width: 3em; 
+    letter-spacing: -1px;
+    border-right: 1px solid #3e4451; 
+    user-select: none;
+}
+
+.line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #5c6370; 
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+/* Line highlighter tinting styling */
+.line-highlight {
+    position: absolute !important;
+    left: 0;
+    right: 0;
+    padding: 0;
+    margin-top: 1em; 
+    background: rgba(154, 107, 214, 0.15) !important; 
+    pointer-events: none;
+    line-height: inherit;
+    white-space: pre;
+}/***
   1. THREE-COLUMN RESPONSIBLE LAYOUT MECHANICS
 ***/
 
