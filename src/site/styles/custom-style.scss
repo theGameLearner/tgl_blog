@@ -1,89 +1,84 @@
 /***
-  1. FIXING THE 3-COLUMN ABSOLUTE RESPONSIVENESS
+  1. FIXING THE 3-COLUMN CORE GRID STYLING
 ***/
 
-/* Reset main structural layout constraints */
-.container {
-    max-width: 100% !important;
+/* Target the overarching note body container which wraps the columns */
+.note-body {
+    display: grid !important;
+    grid-template-columns: 280px minmax(0, 1fr) 300px !important;
+    gap: 2.5rem !important;
+    max-width: 1500px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure the central text area occupies the proper middle space */
+.content {
+    grid-column: 2 !important; /* Forces it explicitly into the middle grid path */
+    max-width: 820px !important;
     width: 100% !important;
     margin: 0 !important;
-    padding: 0 !important;
-    display: block !important; /* Disables the broken flexbox overlay */
+    padding: 2.5rem 0 !important;
 }
 
-/* Fix the Main Content Column.
-  By assigning explicit side margins, the text area automatically resizes 
-  in the center space without ever colliding with the floating panels.
-*/
-.content {
-    max-width: 850px !important;
-    margin-left: 320px !important;  /* Creates an unbreachable wall protecting the left side */
-    margin-right: 340px !important; /* Creates an unbreachable wall protecting the right side */
-    padding: 3rem 2rem !important;
-    box-sizing: border-box !important;
-}
-
-/* Force Left Sidebar to snap clean against the leftmost browser edge */
-nav.filetree-sidebar {
-    position: fixed !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 280px !important;
-    height: 100vh !important;
-    padding: 11rem 1.5rem 2rem 1.5rem !important; /* Leaves room above folders for your logo */
-    box-sizing: border-box !important;
-    border-right: 1px solid #222222;
-    overflow-y: auto !important;
-    z-index: 99;
-}
-
-/* Force Right Column components to align and snap clean to the right edge */
-.right-sidebar, .toc, .backlinks, .graph-container {
-    position: fixed !important;
-    right: 0 !important;
-    width: 300px !important;
-    box-sizing: border-box !important;
-    z-index: 99;
-}
-
-/* Stack individual right components accurately vertically */
-.toc {
-    top: 3rem !important;
-    height: 45vh !important;
-    overflow-y: auto !important;
-}
-
-.graph-container {
-    top: 50vh !important;
-    height: 25vh !important;
-}
-
-.backlinks {
-    top: 77vh !important;
-    height: 20vh !important;
+/* Reset default margins on the inner headings that caused the alignment offset */
+.content h1, .content h2, .content h3, .content p {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 /***
-  2. PERMANENT LOGO REFIX
+  2. LEFT & RIGHT SIDEBAR POSITIONING
 ***/
 
-/* Render the logo relative to the fixed left sidebar container frame */
+/* Left Sidebar Folder Column styling */
+nav.filetree-sidebar {
+    grid-column: 1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    padding: 2rem 0 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+}
+
+/* Right Sidebar Panel styling */
+.right-sidebar {
+    grid-column: 3 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+}
+
+/* Ensure specific right-side widgets sit cleanly */
+.toc, .backlinks, .graph-container {
+    position: relative !important;
+    width: 100% !important;
+    margin-bottom: 2rem !important;
+}
+
+/***
+  3. PERFECT LOGO ALIGNMENT
+***/
+
+/* Place the logo at the very top of the left sidebar container */
 nav.filetree-sidebar::before { 
     content: "";
     display: block;
-    width: 130px; 
-    height: 130px;
-    position: fixed; /* Ensures it stays visible on top when scrolling folders */
-    top: 1.5rem;
-    left: 75px; /* Adjust this value if you want to shift it left or right */
+    width: 140px; 
+    height: 140px;
+    margin: 0 auto 1.5rem auto; /* Centers the icon perfectly with safe margin below */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
-    z-index: 100;
 }
 
-/* Mini navigation icon adjustment */
+/* Inline navigation item navbar icon adjustments */
 nav.navbar .navbar-inner h1::before {
     content: " ";
     display: inline-block;
@@ -97,21 +92,19 @@ nav.navbar .navbar-inner h1::before {
 }
 
 /***
-  3. MEDIA RESPONSIVENESS (MOBILE AND TABLET VIEWPORTS)
+  4. MEDIA RESPONSIVENESS (MOBILE LAYOUT FIX)
 ***/
 @media screen and (max-width: 1150px) {
-    /* When the browser window gets narrow, eliminate side margins to fit text comfortably */
+    .note-body {
+        display: block !important; /* Collapses the columns gracefully on small screens */
+    }
     .content {
-        margin-left: 20px !important;
-        margin-right: 20px !important;
-        max-width: 100% !important;
-        padding-top: 5rem !important;
+        padding: 2rem 1rem !important;
     }
 }
 
-
 /***
-  4. CODE BLOCKS: LINE NUMBERS & LINE HIGHLIGHTS
+  5. CODE BLOCKS: LINE NUMBERS & HIGHLIGHTS
 ***/
 pre[class*="language-"] {
     position: relative !important;
@@ -145,132 +138,6 @@ pre[class*="language-"] {
     text-align: right;
 }
 
-.line-highlight {
-    position: absolute !important;
-    left: 0;
-    right: 0;
-    padding: 0;
-    margin-top: 1em; 
-    background: rgba(154, 107, 214, 0.15) !important; 
-    pointer-events: none;
-    line-height: inherit;
-    white-space: pre;
-}/***
-  1. REPAIRING THE 3-COLUMN FLEX LAYOUT
-***/
-
-/* Broaden the root application container context safely */
-.container {
-    max-width: 1440px !important; 
-    margin: 0 auto !important;
-    display: flex !important;
-    gap: 2rem !important; /* Forces a safe gap between all 3 main columns */
-}
-
-/* Ensure central content reads cleanly and handles padding gracefully */
-.content {
-    max-width: 820px !important;
-    width: 100% !important;
-    min-width: 0 !important; /* Prevents text overflow / collision */
-    padding: 2.5rem 1.5rem !important;
-    flex-grow: 1 !important;
-}
-
-/* Lock down the Right Sidebar container completely so it stops sliding left */
-.right-sidebar {
-    width: 280px !important;
-    min-width: 260px !important;
-    flex-shrink: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.5rem !important;
-}
-
-/* Reset individual right-hand widgets so they sit sequentially */
-.toc, .backlinks, .graph-container {
-    position: static !important; /* Removes absolute layout jumps */
-    width: 100% !important;
-    height: auto !important;
-}
-
-/***
-  2. CORRECTED LEFT SIDEBAR LOGO
-***/
-
-/* Give the left sidebar tree container absolute dimension safety */
-nav.filetree-sidebar {
-    width: 260px !important;
-    min-width: 240px !important;
-    flex-shrink: 0 !important;
-    padding-top: 1.5rem !important;
-}
-
-/* Inject the brand logo nicely above the structural folder links */
-nav.filetree-sidebar::before { 
-    content: "";
-    display: block;
-    width: 120px; 
-    height: 120px;
-    margin: 0 auto 1.5rem auto; /* Centers the icon perfectly and pads the bottom */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("/img/user/Images/Logo/Tgl logo.png"); 
-}
-
-/* Inline small icon alignment for header tabs */
-nav.navbar .navbar-inner h1::before {
-    content: " ";
-    display: inline-block;
-    width: 1em;
-    height: 1.2em;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url("/img/user/Images/Logo/Tgl logo.png");
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-
-/***
-  3. CODE BLOCKS: LINE NUMBERS & LINE HIGHLIGHTS (CODE STYLER STYLE)
-***/
-
-/* Standardize padding within your container wrappers */
-pre[class*="language-"] {
-    position: relative !important;
-    padding-left: 3.8em !important;
-    overflow-x: auto !important;
-    border-radius: 6px !important;
-}
-
-/* Setup numerical sequences along the code margins */
-.line-numbers-rows {
-    position: absolute !important;
-    pointer-events: none;
-    top: 0;
-    font-size: 100%;
-    left: 0;
-    width: 3em; 
-    letter-spacing: -1px;
-    border-right: 1px solid #3e4451; 
-    user-select: none;
-}
-
-.line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
-}
-
-.line-numbers-rows > span:before {
-    content: counter(linenumber);
-    color: #5c6370; 
-    display: block;
-    padding-right: 0.8em;
-    text-align: right;
-}
-
-/* Highlighting specific code lines */
 .line-highlight {
     position: absolute !important;
     left: 0;
