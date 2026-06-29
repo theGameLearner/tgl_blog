@@ -1,4 +1,223 @@
 /***
+ * ─── 1. GRID LAYOUT ─────────────────────────────────────────────────────────────
+ *   Three‑column grid: left sidebar | main content | right sidebar
+ ***/
+
+.note-body {
+    display: grid !important;
+    grid-template-columns: 280px 1fr 300px !important;
+    gap: 2.5rem !important;
+    max-width: 1500px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+    align-items: start !important;
+}
+
+
+/***
+ * ─── 2. LEFT SIDEBAR ───────────────────────────────────────────────────────────
+ *   The logo is placed as a direct child of the sidebar using padding-top,
+ *   which pushes all content down so nothing is hidden behind it.
+ ***/
+
+nav.filetree-sidebar {
+    grid-column: 1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    padding: 10rem 1rem 2rem 1rem !important;  /* ← key: top padding makes room for logo */
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+}
+
+/* Logo as a pseudo-element, positioned in the padding area */
+nav.filetree-sidebar::before {
+    content: "" !important;
+    display: block !important;
+    width: 120px !important;
+    height: 120px !important;
+    position: absolute !important;
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    z-index: 10 !important;
+}
+
+/* Graph on top, outline below */
+nav.filetree-sidebar .graph-container {
+    order: -1 !important;
+    margin-bottom: 0 !important;
+}
+
+nav.filetree-sidebar .toc {
+    order: 0 !important;
+}
+
+
+/***
+ * ─── 3. RIGHT SIDEBAR ──────────────────────────────────────────────────────────
+ *   Stays at the right edge. The logo is NOT placed here (per your request,
+ *   "have a TGL icon image on top right, like a homepage icon" – but the
+ *   left panel is the one being covered, so we keep the logo on the left).
+ ***/
+
+.right-sidebar {
+    grid-column: 3 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    padding: 2rem 0 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+}
+
+
+/***
+ * ─── 4. MAIN CONTENT ───────────────────────────────────────────────────────────
+ *   Expands to fill the remaining space.
+ ***/
+
+.content {
+    grid-column: 2 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+/* Reset margins so text aligns properly */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content p,
+.content ul,
+.content ol,
+.content div {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+
+/***
+ * ─── 5. NAVBAR ICON (browser tab / top bar) ──────────────────────────────────
+ *   Keeps a small icon in the navigation bar for consistency.
+ ***/
+
+nav.navbar .navbar-inner h1::before {
+    content: " " !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+}
+
+
+/***
+ * ─── 6. CODE BLOCKS – LINE NUMBERS & HIGHLIGHTS ──────────────────────────────
+ ***/
+
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+}
+
+.line-numbers-rows {
+    position: absolute !important;
+    pointer-events: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 3em !important;
+    font-size: 100% !important;
+    letter-spacing: -1px !important;
+    border-right: 1px solid #3e4451 !important;
+    user-select: none !important;
+}
+
+.line-numbers-rows > span {
+    display: block !important;
+    counter-increment: linenumber !important;
+}
+
+.line-numbers-rows > span::before {
+    content: counter(linenumber) !important;
+    color: #5c6370 !important;
+    display: block !important;
+    padding-right: 0.8em !important;
+    text-align: right !important;
+}
+
+.line-highlight {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 !important;
+    margin-top: 1em !important;
+    background: rgba(154, 107, 214, 0.15) !important;
+    pointer-events: none !important;
+    line-height: inherit !important;
+    white-space: pre !important;
+}
+
+
+/***
+ * ─── 7. RESPONSIVE – COLLAPSES TO SINGLE COLUMN ON SMALL SCREENS ─────────────
+ ***/
+
+@media screen and (max-width: 1150px) {
+    .note-body {
+        display: block !important;
+        padding: 0 1rem !important;
+    }
+
+    .content {
+        padding: 2rem 0 !important;
+        max-width: 100% !important;
+    }
+
+    nav.filetree-sidebar,
+    .right-sidebar {
+        position: relative !important;
+        height: auto !important;
+        padding: 2rem 0 !important;
+        overflow-y: visible !important;
+        width: 100% !important;
+        min-width: unset !important;
+    }
+
+    /* On mobile, reduce logo size and keep it centered */
+    nav.filetree-sidebar::before {
+        width: 80px !important;
+        height: 80px !important;
+        top: 0.5rem !important;
+    }
+
+    nav.filetree-sidebar {
+        padding-top: 7rem !important; /* less padding on mobile */
+    }
+}/***
  * ─── 1. RESET & GLOBAL OVERRIDES ──────────────────────────────────────────────
  *   Force all layout rules to override the theme’s default styling.
  *   All selectors use !important to guarantee precedence.
