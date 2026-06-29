@@ -1,4 +1,198 @@
 /***
+ * ─── FORCE GRID LAYOUT ─────────────────────────────────────────────────────────
+ ***/
+.note-body {
+    display: grid !important;
+    grid-template-columns: 280px 1fr 280px !important;
+    gap: 0 !important;                    /* no gap – we'll use padding for spacing */
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    align-items: start !important;
+    background: transparent !important;
+}
+
+/***
+ * ─── LEFT SIDEBAR ──────────────────────────────────────────────────────────────
+ *   Sticky, scrollable, with logo at top and file tree below.
+ ***/
+nav.filetree-sidebar {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    padding: 10rem 1.5rem 2rem 1.5rem !important;  /* top padding for logo */
+    box-sizing: border-box !important;
+    background: var(--bg-secondary, #f5f5f5) !important; /* use your theme's bg */
+    border-right: 1px solid var(--border, #ddd) !important;
+    z-index: 10 !important;
+}
+
+/* Logo – placed absolutely inside the left sidebar */
+nav.filetree-sidebar::before {
+    content: "" !important;
+    display: block !important;
+    width: 120px !important;
+    height: 120px !important;
+    position: absolute !important;
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    z-index: 20 !important;
+    pointer-events: none !important; /* makes it click-through if needed */
+}
+
+/* Make sure the sidebar content starts below the logo */
+nav.filetree-sidebar .filetree {
+    margin-top: 1rem !important;
+}
+
+/***
+ * ─── RIGHT SIDEBAR ─────────────────────────────────────────────────────────────
+ *   Sticky, scrollable, graph on top, outline below.
+ ***/
+.right-sidebar {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    padding: 1.5rem !important;
+    box-sizing: border-box !important;
+    background: var(--bg-secondary, #f5f5f5) !important;
+    border-left: 1px solid var(--border, #ddd) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    z-index: 10 !important;
+}
+
+/* Graph on top, outline below */
+.right-sidebar .graph-container {
+    order: -1 !important;
+    margin: 0 !important;
+}
+.right-sidebar .toc {
+    order: 0 !important;
+    margin: 0 !important;
+}
+
+/***
+ * ─── MAIN CONTENT ──────────────────────────────────────────────────────────────
+ *   Expands to fill the middle column, no padding to avoid shifting.
+ ***/
+.content {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 2rem 3rem !important;        /* comfortable reading space */
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: var(--bg-primary, white) !important;
+}
+
+/* Reset all margins so text sits flush */
+.content h1, .content h2, .content h3, .content h4,
+.content h5, .content h6, .content p, .content ul,
+.content ol, .content div, .content pre {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/***
+ * ─── NAVBAR ICON (small icon in top bar) ─────────────────────────────────────
+ ***/
+nav.navbar .navbar-inner h1::before {
+    content: " " !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+}
+
+/***
+ * ─── CODE BLOCKS ───────────────────────────────────────────────────────────────
+ ***/
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+}
+.line-numbers-rows {
+    position: absolute !important;
+    pointer-events: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 3em !important;
+    border-right: 1px solid #3e4451 !important;
+    user-select: none !important;
+}
+.line-numbers-rows > span {
+    display: block !important;
+    counter-increment: linenumber !important;
+}
+.line-numbers-rows > span::before {
+    content: counter(linenumber) !important;
+    color: #5c6370 !important;
+    display: block !important;
+    padding-right: 0.8em !important;
+    text-align: right !important;
+}
+.line-highlight {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 !important;
+    margin-top: 1em !important;
+    background: rgba(154, 107, 214, 0.15) !important;
+    pointer-events: none !important;
+    line-height: inherit !important;
+    white-space: pre !important;
+}
+
+/***
+ * ─── RESPONSIVE ────────────────────────────────────────────────────────────────
+ ***/
+@media screen and (max-width: 1150px) {
+    .note-body {
+        display: block !important;
+    }
+    nav.filetree-sidebar,
+    .right-sidebar {
+        position: relative !important;
+        height: auto !important;
+        padding: 1rem !important;
+        border: none !important;
+        background: transparent !important;
+    }
+    nav.filetree-sidebar {
+        padding-top: 8rem !important;
+    }
+    nav.filetree-sidebar::before {
+        width: 80px !important;
+        height: 80px !important;
+        top: 0.5rem !important;
+    }
+    .content {
+        padding: 1rem !important;
+    }
+}/***
  * ─── 1. GRID LAYOUT ────────────────────────────────────────────────────────────
  *   Left (280px) | Middle (1fr) | Right (280px)
  ***/
