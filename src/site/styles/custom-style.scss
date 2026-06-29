@@ -1,4 +1,259 @@
 /***
+ * ─── 1. RESET & GLOBAL OVERRIDES ──────────────────────────────────────────────
+ *   Force all layout rules to override the theme’s default styling.
+ *   All selectors use !important to guarantee precedence.
+ ***/
+
+/* The main wrapper – switch from whatever the theme uses to a modern grid */
+.note-body {
+    display: grid !important;
+    grid-template-columns: 280px 1fr 300px !important;
+    grid-template-rows: auto 1fr !important;
+    gap: 0 2.5rem !important;
+    max-width: 1500px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+    min-height: 100vh !important;
+    align-items: start !important;
+}
+
+
+/***
+ * ─── 2. LOGO – TOP RIGHT (HOMEPAGE ICON) ─────────────────────────────────────
+ *   The icon is placed above the right panel using a pseudo‑element on the
+ *   .right-sidebar container. It sits at the very top right corner, acting
+ *   as a clickable homepage link.
+ ***/
+
+/* The right sidebar becomes the anchor for the logo */
+.right-sidebar {
+    grid-column: 3 !important;
+    grid-row: 1 / -1 !important;          /* spans full height */
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    padding: 6rem 0 2rem 0 !important;    /* top padding makes room for the logo */
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+}
+
+/* The logo itself – positioned at the top of the right sidebar */
+.right-sidebar::before {
+    content: "" !important;
+    display: block !important;
+    width: 80px !important;
+    height: 80px !important;
+    position: absolute !important;
+    top: 1.2rem !important;
+    right: 0 !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    cursor: pointer !important;
+    z-index: 200 !important;
+    transition: transform 0.2s ease !important;
+}
+
+/* Optional hover effect for the logo */
+.right-sidebar::before:hover {
+    transform: scale(1.05) !important;
+}
+
+/* The right sidebar content sits below the logo */
+.right-sidebar .toc,
+.right-sidebar .backlinks,
+.right-sidebar .graph-container {
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/***
+ * ─── 3. LEFT PANEL – GRAPH ON TOP, OUTLINE BELOW ─────────────────────────────
+ *   The left sidebar becomes a two‑section container: graph first,
+ *   then the table of contents (outline). Both are stacked vertically.
+ ***/
+
+nav.filetree-sidebar {
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    padding: 2rem 0 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+}
+
+/* Ensure the graph container sits at the top of the left panel */
+nav.filetree-sidebar .graph-container {
+    order: -1 !important;          /* forces graph to appear first */
+    margin-bottom: 0.5rem !important;
+}
+
+/* The outline (TOC) appears below the graph */
+nav.filetree-sidebar .toc {
+    order: 0 !important;
+}
+
+/* Hide the original file-tree heading if present, or keep it */
+nav.filetree-sidebar .filetree-heading {
+    display: none !important;      /* optional: removes "Files" label */
+}
+
+
+/***
+ * ─── 4. MIDDLE PANEL – EXPANDS TO FILL REMAINING SPACE ──────────────────────
+ *   The content area takes the middle column and stretches to fill the
+ *   available width between the two sidebars.
+ ***/
+
+.content {
+    grid-column: 2 !important;
+    grid-row: 1 / -1 !important;
+    max-width: 100% !important;    /* allows it to expand fully */
+    width: 100% !important;
+    padding: 2.5rem 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+/* Reset all heading and paragraph margins so text aligns cleanly */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content p,
+.content ul,
+.content ol,
+.content div {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+
+/***
+ * ─── 5. NAVBAR ICON (BROWSER TAB / TOP BAR) ──────────────────────────────────
+ *   Keeps the small icon in the navigation bar for consistency.
+ ***/
+
+nav.navbar .navbar-inner h1::before {
+    content: " " !important;
+    display: inline-block !important;
+    width: 1.2em !important;
+    height: 1.2em !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-image: url("/img/user/Images/Logo/Tgl logo.png") !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+}
+
+
+/***
+ * ─── 6. CODE BLOCKS – LINE NUMBERS & HIGHLIGHTS ──────────────────────────────
+ *   Applies line‑number gutters and highlight overlays to all
+ *   Prism‑style code blocks.
+ ***/
+
+pre[class*="language-"] {
+    position: relative !important;
+    padding-left: 3.8em !important;
+    overflow-x: auto !important;
+    border-radius: 6px !important;
+}
+
+.line-numbers-rows {
+    position: absolute !important;
+    pointer-events: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 3em !important;
+    font-size: 100% !important;
+    letter-spacing: -1px !important;
+    border-right: 1px solid #3e4451 !important;
+    user-select: none !important;
+}
+
+.line-numbers-rows > span {
+    display: block !important;
+    counter-increment: linenumber !important;
+}
+
+.line-numbers-rows > span::before {
+    content: counter(linenumber) !important;
+    color: #5c6370 !important;
+    display: block !important;
+    padding-right: 0.8em !important;
+    text-align: right !important;
+}
+
+.line-highlight {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 !important;
+    margin-top: 1em !important;
+    background: rgba(154, 107, 214, 0.15) !important;
+    pointer-events: none !important;
+    line-height: inherit !important;
+    white-space: pre !important;
+}
+
+
+/***
+ * ─── 7. RESPONSIVE BREAKPOINT – COLLAPSE TO SINGLE COLUMN ────────────────────
+ *   On smaller screens (≤ 1150px), the grid collapses and all panels
+ *   stack vertically. The logo stays at the top right.
+ ***/
+
+@media screen and (max-width: 1150px) {
+    .note-body {
+        display: block !important;
+        padding: 0 1rem !important;
+    }
+
+    .content {
+        padding: 2rem 0 !important;
+        max-width: 100% !important;
+    }
+
+    nav.filetree-sidebar,
+    .right-sidebar {
+        position: relative !important;
+        height: auto !important;
+        padding: 2rem 0 !important;
+        overflow-y: visible !important;
+        width: 100% !important;
+        min-width: unset !important;
+    }
+
+    /* Keep the logo at the top right even on mobile */
+    .right-sidebar::before {
+        top: 0.5rem !important;
+        right: 0.5rem !important;
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .right-sidebar {
+        padding-top: 5rem !important; /* extra space for the logo on mobile */
+    }
+}/***
   1. CLEAN RE-ALIGNMENT OF GLOBAL RESPONSIVE CONTAINERS
 ***/
 
