@@ -745,7 +745,7 @@ Test result:
 
 ## Configure FileBowser in Ubuntu for browser access.
 Next, if we do not want to use `Nemo` file explorer in the browser to login, we can use `FileBowser` to give a browser based access to the users in our LAN. This will allow us to use our browser as a file explorer to access all files.
-#incomplete 
+see [[All Published Notes/Homelab/016 Using filebrowser instead of samba\|016 Using filebrowser instead of samba]] and [[All Published Notes/Homelab/017 Using Filestash to access Samba share\|017 Using Filestash to access Samba share]].
 
 ## How to change the configured IP for LXC
 
