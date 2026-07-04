@@ -17,7 +17,7 @@ Steps:
 - [[#Create yml for Filestash]]
 - [[#In filestash, add admin credentials]]
 - [[#add samba as backend for Filestash]]
-- [[#Link Your Samba Users via Passthrough]]
+- [[#Testing]]
 
 ## Prepare the directory structure on LXC
 
