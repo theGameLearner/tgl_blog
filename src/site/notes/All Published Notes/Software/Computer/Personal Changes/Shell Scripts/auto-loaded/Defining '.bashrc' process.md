@@ -3,7 +3,7 @@
 ---
 
 created: 2026-01-01
-updated: 2026-01-01
+updated: 2026-07-05
 ### Why?
 I have the `.bashrc` file with lot of changes being made to my machine.
 I would like to segregate the code to create specific files which does a specific action, and call them from `.bashrc` to make it easier to read and understand what my `.bashrc` does.
@@ -50,5 +50,7 @@ source ~/.bashrc
 ### Current changes:
 We update the bashrc file, to use the following files:
 - [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]]
+- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/Change PS1 format\|Change PS1 format]]
+- 
 for any runtime script, we can refer to [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 

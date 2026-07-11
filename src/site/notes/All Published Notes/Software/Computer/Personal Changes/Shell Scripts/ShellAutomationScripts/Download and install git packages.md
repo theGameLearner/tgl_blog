@@ -243,6 +243,6 @@ Make sure to save this file after line edit.
 
 ---
 
-[^1]:
-[^2]:
+[^1]: 
+[^2]: 
 

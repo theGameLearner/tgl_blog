@@ -255,7 +255,8 @@ root@DockerHost:~#
 
 Now, we can access it over LAN on any machine, and I only need to use password when I want to write something new.
 
-
+> [!Note]
+> Trying the same with https failed, I am not sure of the reason and do not want to worry about it given that the whole system is running locally with no external access.
 
 
 ---
