@@ -3,7 +3,7 @@
 ---
 
 created: 2026-05-16
-updated: 2026-05-16
+updated: 2026-07-15
 
 A common problem is that Proxmox host has it's own DNS address from Netbird, the host machine's config is set to Netbird alone. Meaning any new LXC which is started may not be able to use internet unless they are also connected to netbird.
 
@@ -76,6 +76,7 @@ root@pve:~#
 > [!Info]
 > In case the LXC still has issues connecting to internet, use the same option as host to define the fallback in the LXC.
 
+Another option is when making the LXC, add DNS as sometimes the DNS doesn't work when using host setting (My host uses netbird, whereas the LXC will not be using it when newly created).
 
 
 
