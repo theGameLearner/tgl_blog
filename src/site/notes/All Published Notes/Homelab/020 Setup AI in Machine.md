@@ -656,6 +656,7 @@ Important commands:
 	- `Ctrl + c`: Stop the model from responding
 	- `Ctrl + d`: Exit ollama (/bye)
 
+![083 Homelab Local AI Rider Setting.png](/img/user/083%20Homelab%20Local%20AI%20Rider%20Setting.png)
 
 
 ---
