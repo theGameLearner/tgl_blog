@@ -30,9 +30,9 @@ See My better projects:
 - Unity
 	- [inertial velocity](https://vjs22334.itch.io/inertial-velocity) - Unity game made with friends
 - website
-	- [tgl_blog](https://github.com/theGameLearner/tgl_blog) - this website's git repository which is writtten in [Obsidian](https://obsidian.md/) and published using [Digital Garden](https://github.com/oleeskild/Obsidian-digital-garden) and Vercel
+	- **[tglblog.vercel.app](https://tglblog.vercel.app/)**: [tgl_blog](https://github.com/theGameLearner/tgl_blog) - this website's git repository which is writtten in [Obsidian](https://obsidian.md/) and published using [Digital Garden](https://github.com/oleeskild/Obsidian-digital-garden) and Vercel
 - Services
-	- My Homelab based services are not accessible publically
+	- My Homelab based services are not accessible publicly
 - Terminal Commands
 	- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 - 
@@ -48,6 +48,8 @@ Topics:
 		* Obsidian
 			* [[All Published Notes/Website/Static/Obsidian/Obsidian Publish\|Obsidian Publish]]
 * Hardware
+	* [[All Published Notes/Hardware/Formatting new Hard drive\|Formatting new Hard drive]]
+* Software
 	* Mobile
 		* [[All Published Notes/Software/Mobile/Termux\|Termux]]
 		* Termux
@@ -112,6 +114,7 @@ Topics:
 			* [[All Published Notes/Unity/Publish/Scoped Registry/How to use a Scoped Repository from Github\|How to use a Scoped Repository from Github]]
 			* [[All Published Notes/Unity/Publish/Scoped Registry/Making Scoped Registry (Theory)\|Making Scoped Registry (Theory)]]
 			* [[All Published Notes/Unity/Publish/Scoped Registry/My Step by Step Guide\|My Step by Step Guide]]
+			* [[All Published Notes/Unity/Publish/Scoped Registry/Re-Attempting to Simplify creating and using a scoped registry from github\|Re-Attempting to Simplify creating and using a scoped registry from github]]
 * 
 
 

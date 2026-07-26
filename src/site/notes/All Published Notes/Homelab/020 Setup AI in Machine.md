@@ -61,14 +61,14 @@ Let us first create an LXC that will hold everything AI, I will proceed with 'qw
 	- server: `1.1.1.1` as my proxmox host always routes DNS with Netbird
 - Proceed to complete
 
-![075 Homelab Local AI LXC creation 01.png|100](/img/user/075%20Homelab%20Local%20AI%20LXC%20creation%2001.png)
-![076 Homelab Local AI LXC creation 02.png|100](/img/user/076%20Homelab%20Local%20AI%20LXC%20creation%2002.png)
-![077 Homelab Local AI LXC creation 03.png|100](/img/user/077%20Homelab%20Local%20AI%20LXC%20creation%2003.png)
-![078 Homelab Local AI LXC creation 04.png|100](/img/user/078%20Homelab%20Local%20AI%20LXC%20creation%2004.png)
-![079 Homelab Local AI LXC creation 05.png|100](/img/user/079%20Homelab%20Local%20AI%20LXC%20creation%2005.png)
-![080 Homelab Local AI LXC creation 06.png|100](/img/user/080%20Homelab%20Local%20AI%20LXC%20creation%2006.png)
-![081 Homelab Local AI LXC creation 07.png|100](/img/user/081%20Homelab%20Local%20AI%20LXC%20creation%2007.png)
-![082 Homelab Local AI LXC creation 08 updated network.png|100](/img/user/082%20Homelab%20Local%20AI%20LXC%20creation%2008%20updated%20network.png)
+![075 Homelab Local AI LXC creation 01.png|100](/img/user/All%20Published%20Notes/Homelab/Images/075%20Homelab%20Local%20AI%20LXC%20creation%2001.png)
+![076 Homelab Local AI LXC creation 02.png|100](/img/user/All%20Published%20Notes/Homelab/Images/076%20Homelab%20Local%20AI%20LXC%20creation%2002.png)
+![077 Homelab Local AI LXC creation 03.png|100](/img/user/All%20Published%20Notes/Homelab/Images/077%20Homelab%20Local%20AI%20LXC%20creation%2003.png)
+![078 Homelab Local AI LXC creation 04.png|100](/img/user/All%20Published%20Notes/Homelab/Images/078%20Homelab%20Local%20AI%20LXC%20creation%2004.png)
+![079 Homelab Local AI LXC creation 05.png|100](/img/user/All%20Published%20Notes/Homelab/Images/079%20Homelab%20Local%20AI%20LXC%20creation%2005.png)
+![080 Homelab Local AI LXC creation 06.png|100](/img/user/All%20Published%20Notes/Homelab/Images/080%20Homelab%20Local%20AI%20LXC%20creation%2006.png)
+![081 Homelab Local AI LXC creation 07.png|100](/img/user/All%20Published%20Notes/Homelab/Images/081%20Homelab%20Local%20AI%20LXC%20creation%2007.png)
+![082 Homelab Local AI LXC creation 08 updated network.png|100](/img/user/All%20Published%20Notes/Homelab/Images/082%20Homelab%20Local%20AI%20LXC%20creation%2008%20updated%20network.png)
 
 
 ```sh
@@ -656,7 +656,69 @@ Important commands:
 	- `Ctrl + c`: Stop the model from responding
 	- `Ctrl + d`: Exit ollama (/bye)
 
-![083 Homelab Local AI Rider Setting.png](/img/user/083%20Homelab%20Local%20AI%20Rider%20Setting.png)
+![083 Homelab Local AI Rider Setting.png](/img/user/All%20Published%20Notes/Homelab/Images/083%20Homelab%20Local%20AI%20Rider%20Setting.png)
+
+
+#### Migrating Docker data to a custom folder
+The docker app has data in a pre-defined folder `/var/lib/docker/`. I want to keep all data in a folder I can control and access easily. So I created a folder called "/home/thegamelearner/Documents/AI_Models".
+We will cover stopping the containers if running, stop docker, use `rsync` to move the data to the folder we want to use, and then restart the docker app.
+
+
+```sh
+
+Sat Jul 18, 01:05:57 PM "~"|
+thegamelearner@thegamelearner-MS-7E12:$ ollama list
+ollama: command not found
+
+Sat Jul 18, 02:23:59 PM "~"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo docker exec -it ollama ollama rm llama3.1
+[sudo] password for thegamelearner:           
+Error response from daemon: container d1bbfa674b71438c5ceea0f67121a721e060f4e715ff03bbacb9c2f1921285a5 is not running
+
+Sat Jul 18, 02:26:36 PM "~"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo systemctl stop docker docker.socket containerd
+
+Sat Jul 18, 02:28:22 PM "~"|
+thegamelearner@thegamelearner-MS-7E12:$ cd "/home/thegamelearner/Documents/AI_Models"
+
+Sat Jul 18, 02:28:48 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo rsync -aP /var/lib/docker/ /home/thegamelearner/Documents/AI_Models/
+sending incremental file list
+...
+Sat Jul 18, 02:29:22 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo fresh /etc/docker/daemon.json
+
+A new version of fresh is available: 0.2.17 -> 0.4.4
+Update with: npm update -g @fresh-editor/fresh-editor
+
+
+Sat Jul 18, 02:30:07 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo cat -n /etc/docker/daemon.json
+     1  {
+     2    "data-root": "/home/thegamelearner/Documents/AI_Models"
+     3  }
+Sat Jul 18, 02:30:14 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo systemctl daemon-reload
+
+Sat Jul 18, 02:30:27 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo systemctl start docker
+
+Sat Jul 18, 02:30:31 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ docker info | grep "Docker Root Dir"
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+
+Sat Jul 18, 02:30:45 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo docker info | grep "Docker Root Dir"
+ Docker Root Dir: /home/thegamelearner/Documents/AI_Models
+
+Sat Jul 18, 02:31:34 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$ sudo docker start ollama
+ollama
+
+Sat Jul 18, 02:31:50 PM "~/Documents/AI_Models"|
+thegamelearner@thegamelearner-MS-7E12:$
+```
+
 
 
 ---

@@ -42,7 +42,12 @@ All Services created and logs of them:
 - [[All Published Notes/Homelab/014 Setting a new default terminal text editor(Fresh)\|014 Setting a new default terminal text editor(Fresh)]]
 - [[All Published Notes/Homelab/015 Managing custom DNS in my homelab\|015 Managing custom DNS in my homelab]]
 	- [[All Published Notes/Homelab/015b Trusting Caddy Certificates\|015b Trusting Caddy Certificates]]
-- [[Creating a drive for LAN\|Creating a drive for LAN]]
+	- [[All Published Notes/Homelab/015c Making Domain accessible publically\|015c Making Domain accessible publically]]
+- [[All Published Notes/Homelab/016 Using filebrowser instead of samba\|016 Using filebrowser instead of samba]]
+- [[All Published Notes/Homelab/017 Using Filestash to access Samba share\|017 Using Filestash to access Samba share]]
+- [[All Published Notes/Homelab/018 Installing qbittorrent for torrents\|018 Installing qbittorrent for torrents]]
+- [[All Published Notes/Homelab/019 Static Page Display\|019 Static Page Display]]
+- [[All Published Notes/Homelab/020 Setup AI in Machine\|020 Setup AI in Machine]]
 
 
 

@@ -38,6 +38,14 @@ Sorry, terminal output does not display colors:
 We can do the same to any shell. 
 
 
+Update:
+
+```
+
+PS1='\n\[\e[48;5;16m\]\[\e[38;5;215;1;3m\]\d\[\e[22;23m\]\[\e[38;5;13;1m\], \[\e[38;5;51;1m\]\D{%I:%M:%S %p}\[\e[22m\] "\[\e[38;5;83;1m\]\w\[\e[22m\]"|\[\e[0m\]\n\[\e[48;5;16m\]\[\e[38;5;196;1m\]\u\[\e[22;38;5;44m\]@\[\e[38;5;201m\]\h\[\e[0m\]:\$ '
+
+```
+
 
 ---
 

@@ -30,7 +30,11 @@ In my case, I have a single SSD in my machine which has 256 GB of space includin
 In my case, the time shown in logs does not match my local time, this might be due to some error so i want to understand and fix it.
 I checked the shell time and setting using `timedatectl status` which shows local setup, this is correct but the logs still shows time in UTC (not error, just different format). On deeper dive, my browser is LibreWolf which uses UTC time, so logs are coming according to it's settings.
 ![004 proxmox time data.png](/img/user/All%20Published%20Notes/Homelab/Images/004%20proxmox%20time%20data.png)
-
+I found that we need to set the time to UTC +05:30 manually.
+- use `timedatectl` to see current date time setting.
+- use `timedatectl list-timezones | grep -i kolkata` to find the proper string for Asia kolkata time
+- use `sudo timedatectl set-timezone Asia/Kolkata` to set the time for the system, as I am on proxmox, `timedatectl set-timezone Asia/Kolkata` worked
+- 
 #### Change default text editor
 I do not like nano, but it is the only text editor we have if we need to change files. I will change my default editor to [fresh](https://getfresh.dev/) editor.
 ##### Micro
@@ -239,7 +243,7 @@ root@pve:~#
 ```
 
 #### My Hard disks are not showing up
-I now proceeded to attach my 3 hard disks(1, 2, 4 TB) which I want to use as NAS. The hard disks do not show up anywhere.
+I now proceeded to attach my 3 hard disks(1, 1, 4 TB) which I want to use as NAS. The hard disks do not show up anywhere.
 
 Again in shell, i will search all disks attached:
 ```sh

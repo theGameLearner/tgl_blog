@@ -44,3 +44,6 @@ These are changes we can do to the system to load and make our commands availabl
 
 #### Running command automations
 - [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/ShellAutomationScripts/Automate commands for post system update\|Automate commands for post system update]]
+	- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/ShellAutomationScripts/Download and install git packages\|Download and install git packages]]
+		- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/ShellAutomationScripts/install_git_package_zen_browser\|install_git_package_zen_browser]]
+- 
