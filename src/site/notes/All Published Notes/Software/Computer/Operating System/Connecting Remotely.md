@@ -78,20 +78,20 @@ There are many protocols that allow one system to connect to another and use it 
 ### Third Party Apps
 Other than these basic protocols and methods, we also have third party apps that allow us to connect different machines. They have ways of handling the right protocols so you do not need to understand it, like:
 
-|Solution Name|Windows|macOS|Linux|Chromebook|
-|---|---|---|---|---|
-|**TeamViewer**|✅|✅|✅|✅ (via Android app)|
-|**AnyDesk**|✅|✅|✅|✅ (enable the "Accessibility Service" permission in ChromeOS settings for controlling a server)|
-|**Splashtop**|✅|✅|✅|✅ (via Android app or web app)|
-|**ConnectWise ScreenConnect**|✅|✅|✅|✅ (via Android app)|
-|**Zoho Assist**|✅|✅|✅|✅ (via Android app or web app)|
-|**Parsec**|✅|✅|✅|✔️|
-|**VNC Connect**|✅|✅|✅|❌ (RealVNC provides a VNC Viewer Android app but I could not make it work)|
-|**RustDesk**|✅|✅|✅|✅ (via Android app; requires Accessibility Service for control)|
-|**Chrome Remote Desktop**|✅|✅|✅|✅ (Server support is for Attended "Remote Support" only; cannot be set up for Unattended access)|
-|**Microsoft Remote Desktop**|✅|✔️|✔️|✔️ (via Android app)|
-|**NoMachine**|✅|✅|✅|✔️ (via Android app or Linux container)|
-|**Remmina**|❌|❌|✔️|✔️ (via Linux container)|
+| Solution Name                 | Windows | macOS | Linux | Chromebook                                                                                       |
+| ----------------------------- | ------- | ----- | ----- | ------------------------------------------------------------------------------------------------ |
+| **TeamViewer**                | ✅       | ✅     | ✅     | ✅ (via Android app)                                                                              |
+| **AnyDesk**                   | ✅       | ✅     | ✅     | ✅ (enable the "Accessibility Service" permission in ChromeOS settings for controlling a server)  |
+| **Splashtop**                 | ✅       | ✅     | ✅     | ✅ (via Android app or web app)                                                                   |
+| **ConnectWise ScreenConnect** | ✅       | ✅     | ✅     | ✅ (via Android app)                                                                              |
+| **Zoho Assist**               | ✅       | ✅     | ✅     | ✅ (via Android app or web app)                                                                   |
+| **Parsec**                    | ✅       | ✅     | ✅     | ✔️                                                                                               |
+| **VNC Connect**               | ✅       | ✅     | ✅     | ❌ (RealVNC provides a VNC Viewer Android app but I could not make it work)                       |
+| **RustDesk**                  | ✅       | ✅     | ✅     | ✅ (via Android app; requires Accessibility Service for control)                                  |
+| **Chrome Remote Desktop**     | ✅       | ✅     | ✅     | ✅ (Server support is for Attended "Remote Support" only; cannot be set up for Unattended access) |
+| **Microsoft Remote Desktop**  | ✅       | ✔️    | ✔️    | ✔️ (via Android app)                                                                             |
+| **NoMachine**                 | ✅       | ✅     | ✅     | ✔️ (via Android app or Linux container)                                                          |
+| **Remmina**                   | ❌       | ❌     | ✔️    | ✔️ (via Linux container)                                                                         |
 
 ### Legend
 - **Server**: The machine being controlled.

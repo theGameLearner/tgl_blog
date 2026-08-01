@@ -24,6 +24,9 @@ See my Unity plugins: [github](https://github.com/tglGames-Plugins)
 - [Internet_Access_Check](https://github.com/tglGames-Plugins/Internet_Access_Check)  
 - [Finite-State-Machine](https://github.com/tglGames-Plugins/Finite-State-Machine)  
 - [tgl-multi-select-dropdown](https://github.com/tglGames-Plugins/tgl-multi-select-dropdown)  
+- [[All Published Notes/Unity/Tools/All Unity Tools\|All Unity Tools]]
+- [[All Published Notes/Unity/Plugins/All Unity Plugins\|All Unity Plugins]]
+- 
 
 ##### Personal Projects
 See My better projects:
@@ -37,85 +40,9 @@ See My better projects:
 	- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 - 
 
-### Content
-Topics are available on the right side of the page, but adding here as well for reference.
+---
 
-Topics:
-* Desktop Publishing (DTP)
-	* [[All Published Notes/Desktop Publishing (DTP)/InkSpace\|InkSpace]]
-* Website
-	* Static
-		* Obsidian
-			* [[All Published Notes/Website/Static/Obsidian/Obsidian Publish\|Obsidian Publish]]
-* Hardware
-	* [[All Published Notes/Hardware/Formatting new Hard drive\|Formatting new Hard drive]]
-* Software
-	* Mobile
-		* [[All Published Notes/Software/Mobile/Termux\|Termux]]
-		* Termux
-			* [[All Published Notes/Software/Mobile/Termux/Changing Termux Font\|Changing Termux Font]]
-	* Computer
-		* Operating System
-			* [[All Published Notes/Software/Computer/Operating System/Connecting Remotely\|Connecting Remotely]]
-			* MacOS
-				* [[All Published Notes/Software/Computer/Operating System/MacOS/Zsh (MacOS)\|Zsh (MacOS)]]
-			* ChromeOS
-				* Remote Connections
-					* CLI
-						* [[All Published Notes/Software/Computer/Operating System/ChromeOS/Remote Connections/CLI/Creating SSH server in Chromebook\|Creating SSH server in Chromebook]]
-			* LinuxMint
-				* Shell
-					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Shell/bash (bourne again shell)\|bash (bourne again shell)]]
-				* VPN
-					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/VPN/Using Cloudflare's Warp on Linux Mint\|Using Cloudflare's Warp on Linux Mint]]
-				* Remote Connections
-					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - TightVNC\|Creating VNC server in LinuxMint - TightVNC]]
-					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Remote Connections/creating RustDesk server in LinuxMint\|creating RustDesk server in LinuxMint]]
-					* [[All Published Notes/Software/Computer/Operating System/LinuxMint/Remote Connections/Creating VNC server in LinuxMint - x11vnc\|Creating VNC server in LinuxMint - x11vnc]]
-		* Personal Changes
-			* Shell Scripts
-				* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
-				* manually-loaded - *custom command scripts made by me as there was no known default script for this*
-					* OS Level
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/identify_system\|identify_system]] - identifies the system
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/Adding personal commands to system\|Adding personal commands to system]] - how to add user defined commands to the system
-					* Folder level scripts
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/list_extensions\|list_extensions]] - lists all extensions in a folder
-					* Git
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_auto_push\|git_auto_push]] - automatically stages, commits and pushes all changes with auto commit messages
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/gclone\|gclone]] - clones a repo using the git config file and multiple ssh
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_status_check\|git_status_check]] - checks all git repo recursively in child directories and checks status
-						* *git_plugin commands* - for git plugin folder, when local and remote has different folder names
-							* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_status\|git_plugin_auto_status]] - check status of the repo 
-							* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_push\|git_plugin_auto_push]] - push the changes
-							* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_pull\|git_plugin_auto_pull]] - pull the changes
-					* Unity
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/open_unity_project\|open_unity_project]] - opens a project in Unity editor
-				* auto-loaded
-					* bashrc Sub-Process
-						* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]] - *colors in terminal*
-					* [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/Defining '.bashrc' process\|Defining '.bashrc' process]] - 
-* Homelab
-	* [[All Published Notes/Homelab/000 Hardware\|000 Hardware]]
-		* Explore the rest using the left side menu
-* Resume
-	* [[All Published Notes/Resume/Resume\|Resume]]
-* Unity
-	* Code Systems
-		* 
-	* Game Mechanics
-		* none for now
-	* Networking
-		* Photon
-			* Pun
-				* [[All Published Notes/Unity/Networking/Photon/Pun/Pun Basic\|Pun Basic]]
-	* Publish
-		* Scoped Registry
-			* [[All Published Notes/Unity/Publish/Scoped Registry/How to use a Scoped Repository from Github\|How to use a Scoped Repository from Github]]
-			* [[All Published Notes/Unity/Publish/Scoped Registry/Making Scoped Registry (Theory)\|Making Scoped Registry (Theory)]]
-			* [[All Published Notes/Unity/Publish/Scoped Registry/My Step by Step Guide\|My Step by Step Guide]]
-			* [[All Published Notes/Unity/Publish/Scoped Registry/Re-Attempting to Simplify creating and using a scoped registry from github\|Re-Attempting to Simplify creating and using a scoped registry from github]]
-* 
+Content: [[All Published Notes/Content\|Content]]
 
 
 

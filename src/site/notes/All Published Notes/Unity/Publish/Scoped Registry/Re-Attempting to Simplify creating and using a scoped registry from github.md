@@ -502,6 +502,10 @@ alwaysAuth = true
 ```
 
 ##### Add toml for the project
+
+> [!Warning]
+> If you want to use local `toml` file, the Unity editor or Unity Hub has to be started from the terminal where the export was set (unless you add this to bashrc). If this is not added, you may not be able to read the packages.
+
 If you are working on a personal project and need access to the scoped registry/package, add the toml to the project and not the whole machine:
 Let's add the toml to the Assets folder of the project under a directory called `AccessConfig` named `upmconfig.toml`:
 ```toml
@@ -577,9 +581,6 @@ Next we will try to download the package using NPM or scoped registry
 
 ##### Test by downloading as scoped registry package
 As I added the file in Assets folder under `Assets/AccessConfig/upmconfig.toml`, we will open using the method explained in [[#Add toml for the project]] section.
-
-> [!Hint]
-> Do we need to open the project with terminal if the export is already done?
 
 Open the project
 ```sh

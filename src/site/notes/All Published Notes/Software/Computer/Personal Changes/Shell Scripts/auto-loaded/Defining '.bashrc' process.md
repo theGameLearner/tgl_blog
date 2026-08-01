@@ -49,8 +49,10 @@ source ~/.bashrc
 
 ### Current changes:
 We update the bashrc file, to use the following files:
-- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]]
+- add `$HOME/bin` to `$PATH`
 - [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/Change PS1 format\|Change PS1 format]]
-- 
+- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]]
+- add ssh agents for git (`~/.config/bash/ssh-agent-setup.sh`)
+
 for any runtime script, we can refer to [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 

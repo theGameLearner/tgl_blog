@@ -48,6 +48,9 @@ All Services created and logs of them:
 - [[All Published Notes/Homelab/018 Installing qbittorrent for torrents\|018 Installing qbittorrent for torrents]]
 - [[All Published Notes/Homelab/019 Static Page Display\|019 Static Page Display]]
 - [[All Published Notes/Homelab/020 Setup AI in Machine\|020 Setup AI in Machine]]
+- [[All Published Notes/Homelab/021 Mount Points in Proxmox\|021 Mount Points in Proxmox]]
+- [[All Published Notes/Homelab/022 Changing the Harddrive in homelab\|022 Changing the Harddrive in homelab]]
+- [[All Published Notes/Homelab/023 diff checker offline\|023 diff checker offline]]
 
 
 

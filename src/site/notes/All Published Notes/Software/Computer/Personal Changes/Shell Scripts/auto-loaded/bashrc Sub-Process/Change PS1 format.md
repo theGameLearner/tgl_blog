@@ -32,6 +32,7 @@ source ~/.bashrc
 Sun Jul 05, 05:49:30 | thegamelearner@thegamelearner-MS-7E12:"~/Documents/GithubNotes/TglBlog"
 $ 
 ```
+
 Sorry, terminal output does not display colors:
 ![terminal ps1 changes.png](/img/user/All%20Published%20Notes/Software/Computer/Personal%20Changes/Shell%20Scripts/auto-loaded/bashrc%20Sub-Process/images/terminal%20ps1%20changes.png)
 

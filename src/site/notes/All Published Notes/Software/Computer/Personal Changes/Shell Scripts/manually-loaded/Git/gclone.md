@@ -318,4 +318,4 @@ fi
 
 [^1] [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/auto-loaded/bashrc Sub-Process/terminal_colors\|terminal_colors]]
 [^2] [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/Adding personal commands to system\|Adding personal commands to system]]
-[^3] [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_pull\|git_plugin_auto_pull]] - used as a reference.
+[^3] [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_pull\|git_plugin_auto_pull]] - used as a reference.

@@ -3,7 +3,7 @@
 ---
 
 created: 2026-01-01
-updated: 2026-01-01
+updated: 2026-08-01
 ### Personal Commands
 There are 2 ways to add your custom commands to your machine, one is to load commands in system through pre-configured directories that process all commands and make it available for all use cases (like /bin), another is to run commands from shell while we login or load a terminal to keep it available for the user.
 #### Making System load Settings on start
@@ -35,12 +35,15 @@ These are changes we can do to the system to load and make our commands availabl
 - Unity
 	- `open_unity_project` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/open_unity_project\|open_unity_project]]
 - Git
-	- `gclone`: [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/gclone\|gclone]]
-	- `git_auto_push` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_auto_push\|git_auto_push]]
-	- `git_plugin_auto_pull` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_pull\|git_plugin_auto_pull]]
-	- `git_plugin_auto_push` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_push\|git_plugin_auto_push]]
-	- `git_plugin_auto_status`: [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_plugin_auto_status\|git_plugin_auto_status]]
-	- `git_status_check`: [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_status_check\|git_status_check]]
+	- standard
+		- `gclone`: [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/gclone\|gclone]]
+		- `git_auto_push` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_auto_push\|git_auto_push]]
+		- `git_status_check`: [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_status_check\|git_status_check]]
+	- Unity plugin
+		- `git_plugin_auto_pull` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_pull\|git_plugin_auto_pull]]
+		- `git_plugin_auto_push` : [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_push\|git_plugin_auto_push]]
+		- `git_plugin_auto_status`: [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_status\|git_plugin_auto_status]]
+	- 
 
 #### Running command automations
 - [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/ShellAutomationScripts/Automate commands for post system update\|Automate commands for post system update]]
