@@ -3,7 +3,7 @@
 ---
 
 created: 2026-07-11
-updated: 2026-07-11
+updated: 2026-08-04
 
 With so many services being added, I need 'one' page with all service URL and the IP addresses that are hosted on my homelab.
 
@@ -82,6 +82,9 @@ Next, we need to define the URL for the IP address so we update the caddy and co
 - /apps/localDns/caddy/config/Caddyfile
 - /apps/localDns/coredns/Corefile
 
+
+
+See : [[All Published Notes/Homelab/024 Serve a static website using caddy\|024 Serve a static website using caddy]] as well, as we used existing caddy rather than making a new one for file_server hosting.
 
 
 
