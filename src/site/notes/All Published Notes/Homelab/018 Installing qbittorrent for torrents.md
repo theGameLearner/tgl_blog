@@ -119,7 +119,7 @@ After this is done, we can set the password:
 Now we can set a password and use it unless the container is deleted and re-built.
 
 
-
+See also: [[All Published Notes/Homelab/026 Installing RuTorrent\|026 Installing RuTorrent]]
 
 
 

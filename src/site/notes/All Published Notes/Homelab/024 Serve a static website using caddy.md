@@ -116,5 +116,5 @@ This file is hosted in Caddyfile and published to us based on the IP address sen
 ---
 
 [^1]: [[All Published Notes/Homelab/023a diff checker offline - monaco-editor\|023a diff checker offline - monaco-editor]]
-[^2]: 
+[^2]: [[All Published Notes/Homelab/019 Static Page Display\|019 Static Page Display]]
 

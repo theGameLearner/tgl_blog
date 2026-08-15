@@ -6,7 +6,7 @@ created: 2026-08-01
 updated: 2026-08-01
 
 Writing a new markdown file generator inside Unity, so I do not have to create the same files every time from scratch.
-We are starting with the markdown template we made in [[All Published Notes/Software/Computer/Development/Markdown Generator/markdown file generator\|markdown file generator]][^1] for python.
+We are starting with the markdown template we made in [[All Published Notes/Computer System/Software/Computer/Development/Markdown Generator/markdown file generator\|markdown file generator]][^1] for python.
 
 The template can be re-located to: `Assets/All Modules/Editor/EditorTools/Files/FileGenerator/Markdown/HowToAddPackage/template.md`
 Then we can write an editor code to generate the `HowToAddPackage.md` file.
@@ -221,7 +221,7 @@ public class MarkdownGeneratorWindow : EditorWindow
 
 ---
 
-[^1]: [[All Published Notes/Software/Computer/Development/Markdown Generator/markdown file generator - python\|markdown file generator - python]]
+[^1]: [[All Published Notes/Computer System/Software/Computer/Development/Markdown Generator/Python/markdown file generator - python\|markdown file generator - python]]
 [^2]: 
 
 

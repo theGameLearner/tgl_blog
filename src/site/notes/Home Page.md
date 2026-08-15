@@ -20,10 +20,6 @@ Contact Me: [LinkedIn](https://www.linkedin.com/in/rishabh-jain-266081b7/), [git
 old projects : [itch](https://thegamelearner.itch.io/)  
 ##### Plugins
 See my Unity plugins: [github](https://github.com/tglGames-Plugins)
-- [tgl-service-locator](https://github.com/tglGames-Plugins/tgl-service-locator)  
-- [Internet_Access_Check](https://github.com/tglGames-Plugins/Internet_Access_Check)  
-- [Finite-State-Machine](https://github.com/tglGames-Plugins/Finite-State-Machine)  
-- [tgl-multi-select-dropdown](https://github.com/tglGames-Plugins/tgl-multi-select-dropdown)  
 - [[All Published Notes/Unity/Tools/All Unity Tools\|All Unity Tools]]
 - [[All Published Notes/Unity/Plugins/All Unity Plugins\|All Unity Plugins]]
 - 
@@ -37,7 +33,7 @@ See My better projects:
 - Services
 	- My Homelab based services are not accessible publicly
 - Terminal Commands
-	- [[All Published Notes/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
+	- [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/Personal Commands\|Personal Commands]]
 - 
 
 ---
