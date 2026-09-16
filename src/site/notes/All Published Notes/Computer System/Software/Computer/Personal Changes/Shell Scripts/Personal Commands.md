@@ -43,6 +43,7 @@ These are changes we can do to the system to load and make our commands availabl
 		- `git_plugin_auto_pull` : [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_pull\|git_plugin_auto_pull]]
 		- `git_plugin_auto_push` : [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_push\|git_plugin_auto_push]]
 		- `git_plugin_auto_status`: [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/git_plugin_auto_status\|git_plugin_auto_status]]
+		- `git_plugin_auto_login`: [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/Unity Plugins/Auto login to Git in terminal\|Auto login to Git in terminal]]
 	- 
 
 #### Running command automations

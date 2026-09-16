@@ -3,7 +3,7 @@
 ---
 
 created: 2026-01-01
-updated: 2026-08-01
+updated: 2026-09-04
 ### git_plugin_auto_push
 A robust script that validates a Git repository, fetches updates, checks for large files, and then safely adds, commits, and pushes local changes. It is designed to prevent common issues like pushing to a repository that has new remote changes or accidentally committing large binary files. It also renames files as defined inside.
 
@@ -29,7 +29,6 @@ Usage:
 
 Code:
 ```sh
-
 #!/bin/bash
 
 # ==============================================================================
@@ -37,7 +36,7 @@ Code:
 #
 # Description:
 #   A robust script that validates a Git repository, fetches updates, checks
-#   for large files, safely adds, commits, and pushes local changes, and
+#   for large filess, validates NPM login, safely adds, commits, and pushes local changes, and
 #   automatically tags & pushes releases when 'package.json' version updates.
 #   It is designed to prevent common issues like pushing to a repository that
 #   has new remote changes or accidentally committing large binary files.
@@ -53,14 +52,28 @@ Code:
 #
 # Exit Codes:
 #   0: Success
-#   1: Error (e.g., not a Git repo, remote has changes, large file found, push failed)
-#	2: No Action (working directory was clean, no changes to commit)
+#       Can mean we have pushed the changes
+#       Can mean there were no changes to push
+#   1: Error (e.g., not logged into NPM, not a Git repo, remote has changes, large file found, push failed)
 # ==============================================================================
 
 # --- Configuration and Initial Setup ---
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
+
+# --- Load Terminal Colors or Fallback Functions ---
+if [[ -f "$HOME/.config/bash/terminal_colors.sh" ]]; then
+    source "$HOME/.config/bash/terminal_colors.sh" || true
+fi
+
+# Define fallback implementations if functions are not set
+type echoerror >/dev/null 2>&1 || echoerror() { echo -e "$1"; }
+type echowarning >/dev/null 2>&1 || echowarning() { echo -e "$1"; }
+type echosuccess >/dev/null 2>&1 || echosuccess() { echo -e "$1"; }
+type echoinfo >/dev/null 2>&1 || echoinfo() { echo -e "$1"; }
+type echohint >/dev/null 2>&1 || echohint() { echo -e "$1"; }
+
 
 # --- Folder Rename Configuration ---
 # Define the folders to be renamed before commit and their new names.
@@ -76,6 +89,17 @@ TARGET_PATH="."
 COMMIT_MESSAGE=""
 PACKAGE_JSON_PATH=""
 TAG_TO_CREATE=""
+NPM_REGISTRY="https://npm.pkg.github.com"
+
+# Resolve absolute target path for clear logging output
+abs_target_path=$(cd "$TARGET_PATH" && pwd)
+
+# --- Exclusion / Ignore Rules ---
+# Pre-defined array of file patterns to exclude/unstage during the commit phase.
+# Defaulted to "*.meta" to indicate Unity/package metadata handling.
+UNSTAGE_PATTERNS=(
+    "*.meta"
+)
 
 
 # --- Cleanup Function ---
@@ -87,16 +111,30 @@ function cleanup() {
     if [[ ! -d "$TARGET_PATH" ]]; then
         return
     fi
+    abs_target_path=$(cd "$TARGET_PATH" && pwd)
 
     echo "--- Running cleanup: Reverting folder names ---"
     # Loop through the arrays to revert names.
     for i in "${!LOCAL_FOLDER_NAMES[@]}"; do
         original_name="${TARGET_PATH}/${LOCAL_FOLDER_NAMES[$i]}"
         new_name="${TARGET_PATH}/${REMOTE_FOLDER_NAMES[$i]}"
+        abs_original_name="${abs_target_path}/${LOCAL_FOLDER_NAMES[$i]}"
+        abs_new_name="${abs_target_path}/${REMOTE_FOLDER_NAMES[$i]}"
+
         # Check if the renamed folder exists before trying to move it.
         if [[ -d "$new_name" ]]; then
-            echo "Reverting '$new_name' back to '$original_name'."
-            mv "$new_name" "$original_name"
+            # If original directory was recreated, merge/remove before restoring
+            if [[ -d "$original_name" ]]; then
+                echo "------------------------------------------------------------" >&2
+                echowarning "⚠️ MANUAL ACTION REQUIRED IN CLEANUP:" >&2
+                echowarning "  Both '$abs_original_name' and '$abs_new_name' exist." >&2
+                echowarning "  The script will NOT automatically move or delete files." >&2
+                echowarning "  Please inspect and resolve conflicts manually." >&2
+                echo "------------------------------------------------------------" >&2
+            else
+                echo "Reverting '$abs_new_name' back to '$abs_original_name'."
+                mv "$new_name" "$original_name"
+            fi
         fi
     done
 }
@@ -111,22 +149,23 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         --path)
             if [[ -z "$2" ]]; then
-                echo "Error: --path requires a directory argument." >&2
+                echoerror "Error: --path requires a directory argument." >&2
                 exit 1
             fi
             TARGET_PATH="$2"
+            abs_target_path=$(cd "$TARGET_PATH" && pwd)
             shift 2 # Move past the flag and its value
             ;;
         --message)
             if [[ -z "$2" ]]; then
-                echo "Error: --message requires a commit message string." >&2
+                echoerror "Error: --message requires a commit message string." >&2
                 exit 1
             fi
             COMMIT_MESSAGE="$2"
             shift 2 # Move past the flag and its value
             ;;
         *)
-            echo "Error: Unknown option '$1'" >&2
+            echoerror "Error: Unknown option '$1'" >&2
             echo "Usage: $0 [--path <directory>] [--message \"commit message\"]" >&2
             exit 1
             ;;
@@ -138,7 +177,7 @@ done
 
 # 1. Check if the target directory actually exists.
 if [[ ! -d "$TARGET_PATH" ]]; then
-    echo "Error: Target directory '$TARGET_PATH' does not exist." >&2
+    echoerror "Error: Target directory '$TARGET_PATH' does not exist." >&2
     exit 1
 fi
 
@@ -146,82 +185,122 @@ fi
 # The `-C` flag tells Git to run the command *from* the TARGET_PATH
 # without actually changing the script's current directory. This is safer.
 if ! git -C "$TARGET_PATH" rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    echo "Warning: The directory '$TARGET_PATH' is not a Git repository." >&2
+    echowarning "Warning: The directory '$TARGET_PATH' is not a Git repository." >&2
     exit 1
 fi
 
-echo "✅ Git repository validated at '$TARGET_PATH'."
+echoinfo "ℹ️  Git repository validated at '$abs_target_path'."
+
+
+# --- NPM Authentication Check ---
+echo "Validating NPM authentication for '$NPM_REGISTRY'..."
+if NPM_USER=$(npm whoami --registry="$NPM_REGISTRY" 2>/dev/null); then
+    echoinfo "ℹ️  NPM user logged in as '$NPM_USER'."
+else
+    echo "------------------------------------------------------------" >&2
+    echoerror "⛔ ERROR: Not authenticated with NPM registry ($NPM_REGISTRY)." >&2
+    echo "  Please ensure you are logged in or your PAT token is set." >&2
+    echo "  You can log in via: npm login --registry=$NPM_REGISTRY" >&2
+    echo "------------------------------------------------------------" >&2
+    exit 1
+fi
 
 
 # --- Remote Repository Validation ---
 
-# 1. Get the current branch name.
+# Get the current branch name.
 CURRENT_BRANCH=$(git -C "$TARGET_PATH" branch --show-current)
 if [[ -z "$CURRENT_BRANCH" ]]; then
-    echo "Error: Could not determine the current branch. Are you in a detached HEAD state?" >&2
+    echoerror "Error: Could not determine the current branch. Are you in a detached HEAD state?" >&2
     exit 1
 fi
 
-# 2. Find the upstream tracking branch (e.g., 'origin/main').
+# Find the upstream tracking branch (e.g., 'origin/main').
 # This is a robust way to find the remote without hardcoding 'origin'.
 UPSTREAM_BRANCH=$(git -C "$TARGET_PATH" rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)
 if [[ -z "$UPSTREAM_BRANCH" ]]; then
-    echo "Warning: The current branch '$CURRENT_BRANCH' is not tracking a remote branch." >&2
+    echowarning "Warning: The current branch '$CURRENT_BRANCH' is not tracking a remote branch." >&2
     echo "Please set an upstream branch to push to (e.g., git push --set-upstream origin $CURRENT_BRANCH)." >&2
     exit 1
 fi
 
 # Parse the remote name and branch from the upstream string (e.g., "origin/main")
 REMOTE_NAME=$(echo "$UPSTREAM_BRANCH" | cut -d'/' -f1)
-# REMOTE_BRANCH=$(echo "$UPSTREAM_BRANCH" | cut -d'/' -f2-)
+REMOTE_BRANCH=$(echo "$UPSTREAM_BRANCH" | cut -d'/' -f2-)
 
-echo "✅ Current branch '$CURRENT_BRANCH' is tracking '$UPSTREAM_BRANCH'."
+echoinfo "ℹ️  Current branch '$CURRENT_BRANCH' is tracking '$UPSTREAM_BRANCH'."
 
 
 # --- Fetch and Status Check ---
 
-# 1. Fetch the latest changes and tags from the remote.
+# Fetch the latest changes and tags from the remote.
 # The `--quiet` flag suppresses unnecessary output.
 echo "Fetching latest changes from remote '$REMOTE_NAME'..."
 if ! git -C "$TARGET_PATH" fetch --tags --quiet "$REMOTE_NAME"; then
-    echo "Error: Failed to fetch from remote repository '$REMOTE_NAME'." >&2
+    echoerror "Error: Failed to fetch from remote repository '$REMOTE_NAME'." >&2
     exit 1
 fi
 
-# 2. check for local commits not yet pushed
+# Check for local commits not yet pushed
 # Check for commits that exist locally but not on the remote.
 OUTGOING_COMMITS=$(git -C "$TARGET_PATH" rev-list "$UPSTREAM_BRANCH"..HEAD --count)
 if [[ "$OUTGOING_COMMITS" -gt 0 ]]; then
     echo "Note: You have $OUTGOING_COMMITS local commit(s) that will be pushed."
 fi
 
-# 3. Check if the remote has commits that we don't have locally.
+# Check if the remote has commits that we don't have locally.
 # If this count is greater than 0, we need to pull first.
 INCOMING_COMMITS=$(git -C "$TARGET_PATH" rev-list HEAD.."$UPSTREAM_BRANCH" --count)
 if [[ "$INCOMING_COMMITS" -gt 0 ]]; then
-    echo "Error: Your local branch is behind the remote. Please 'git pull' first." >&2
+    echoerror "Error: Your local branch is behind the remote. Please 'git pull' first." >&2
     echo "There are $INCOMING_COMMITS new commit(s) on '$UPSTREAM_BRANCH'. Please 'git pull' first." >&2
     exit 1
 fi
 
-echo "✅ Your local branch is up-to-date. No pull needed."
+echoinfo "ℹ️  Your local branch is up-to-date. No pull needed."
+
+
+# --- Folder Renaming ---
+echo "--- Temporarily renaming folders for commit ---"
+for i in "${!LOCAL_FOLDER_NAMES[@]}"; do
+    original_name="${TARGET_PATH}/${LOCAL_FOLDER_NAMES[$i]}"
+    new_name="${TARGET_PATH}/${REMOTE_FOLDER_NAMES[$i]}"
+    abs_original_name="${abs_target_path}/${LOCAL_FOLDER_NAMES[$i]}"
+    abs_new_name="${abs_target_path}/${REMOTE_FOLDER_NAMES[$i]}"
+
+    if [[ -d "$original_name" ]]; then
+        # Check If the destination folder (~ suffix) already exists, clean it up first
+        if [[ -d "$new_name" ]]; then
+            echo "------------------------------------------------------------" >&2
+            echoerror "⛔ ERROR: Directory conflict detected!" >&2
+            echoerror "  Both '$abs_original_name' and '$abs_new_name' exist simultaneously." >&2
+            echoerror "  Please inspect and resolve/remove '$abs_new_name' manually." >&2
+            echo "------------------------------------------------------------" >&2
+            exit 1
+        fi
+
+        echo "Renaming '$abs_original_name' to '$abs_new_name'."
+        mv "$original_name" "$new_name"
+    fi
+done
 
 
 # --- Pre-Commit Validations ---
 
-# 1. Check if there are any changes to commit.
+# Check if there are any changes to commit.
 # `git status --porcelain` gives a clean, script-friendly output.
 # If it's empty, there's nothing to do.
-if [[ -z $(git -C "$TARGET_PATH" status --porcelain) ]]; then
-    echo "No changes to commit. Working tree is clean."
-    exit 2
-fi
+# if [[ -z $(git -C "$TARGET_PATH" status --porcelain) ]]; then
+#    echo "No changes to commit. Working tree is clean."
+#    exit 2
+# fi
 
-# 2. Check for large files BEFORE staging them.
+# Check for large files BEFORE staging them.
 MAX_FILE_SIZE_BYTES=52428800 # 50MB in bytes (50 * 1024 * 1024)
 echo "Checking for files larger than 50MB..."
+OS_TYPE="$(uname)" # identify the OS in use
 
-# Get a combined list of modified and untracked files.
+# Get a combined list of modified and untracked files, but skip the deleted files.
 # We set IFS (Internal Field Separator) to handle filenames with spaces correctly.
 while IFS= read -r -d 
 
@@ -232,32 +311,43 @@ while IFS= read -r -d
 [^3] [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/Git/git_auto_push\|git_auto_push]] - used as a reference, except the auto-renaming before push part.\0' file; do
     full_path="$TARGET_PATH/$file"
 
-    # Check if file exists before trying to stat it
-    # Some files might be tracked with remote names but not exist locally yet
-    if [[ ! -e "$full_path" ]]; then
-        # Skip files that don't exist - they'll be handled after folder renaming
+    # Skip files that have been deleted/moved and no longer exist on disk
+    if [[ ! -f "$full_path" ]]; then
         continue
     fi
 
-    # Get file size in bytes. The `stat` command syntax differs between different Operating Systems. (current command is for BASH)
-    if [[ "$(uname)" == "Darwin" ]]; then
-        # macOS syntax
-        file_size=$(stat -f%z "$full_path")
-    else
-        # Linux syntax
-        file_size=$(stat -c%s "$full_path")
+    # Native Bash file size lookup on Linux/macOS without spawning subshells when possible
+    case "$OS_TYPE" in
+        Darwin)
+            file_size=$(stat -f%z "$full_path" 2>/dev/null)
+            ;;
+        Linux)
+            file_size=$(stat -c%s "$full_path" 2>/dev/null)
+            ;;
+        *MINGW*|*MSYS*|*CYGWIN*)
+            file_size=$(stat -c%s "$full_path" 2>/dev/null || wc -c < "$full_path")
+            ;;
+        *)
+            file_size=$(wc -c < "$full_path" | tr -d ' ')
+            ;;
+    esac
+
+    # Fallback safety check: ensure file_size is a valid numeric value
+    if ! [[ "$file_size" =~ ^[0-9]+$ ]]; then
+        echo "Error: Could not determine file size for $full_path" >&2
+        continue
     fi
 
     if [[ "$file_size" -gt "$MAX_FILE_SIZE_BYTES" ]]; then
         # Use awk for floating point division to get size in MB for the error message.
-        size_mb=$(awk "BEGIN {printf \"%.2f\", $file_size/1024/1024}")
+        size_mb=$(( file_size / 1024 / 1024 ))
 
         echo "------------------------------------------------------------" >&2
-        echo "⛔ Error: File size exceeds the 50MB limit." >&2
-        echo "  File: $file" >&2
-        echo "  Size: ${size_mb} MB" >&2
-        echo "  Action: Please move this file out of the repository," >&2
-        echo "          add it to .gitignore, or use Git LFS." >&2
+        echoerror "⛔ Error: File size exceeds the 50MB limit." >&2
+        echoerror "  File: $file" >&2
+        echoerror "  Size: ${size_mb} MB OR ($file_size bytes)" >&2
+        echoerror "  Action: Please move this file out of the repository," >&2
+        echoerror "          add it to .gitignore, or use Git LFS." >&2
         echo "------------------------------------------------------------" >&2
         exit 1 # This will exit the whole script
     fi
@@ -274,7 +364,7 @@ while IFS= read -r -d
 # special characters are handled correctly.
 done < <(git -C "$TARGET_PATH" ls-files --modified --others --exclude-standard -z)
 
-echo "✅ No large files found."
+echoinfo "ℹ️  No large files found."
 
 # --- Package Version & Tag Detection ---
 PACKAGE_JSON_PATH="${TARGET_PATH}/package.json"
@@ -298,18 +388,6 @@ if [[ -f "$PACKAGE_JSON_PATH" ]]; then
 fi
 
 
-# --- Folder Renaming ---
-echo "--- Temporarily renaming folders for commit ---"
-for i in "${!LOCAL_FOLDER_NAMES[@]}"; do
-    original_name="${TARGET_PATH}/${LOCAL_FOLDER_NAMES[$i]}"
-    new_name="${TARGET_PATH}/${REMOTE_FOLDER_NAMES[$i]}"
-    if [[ -d "$original_name" ]]; then
-        echo "Renaming '$original_name' to '$new_name'."
-        mv "$original_name" "$new_name"
-    fi
-done
-
-
 # --- Add, Commit, and Push ---
 
 # 1. Set the commit message if a custom one wasn't provided.
@@ -321,10 +399,10 @@ fi
 echo "Staging all changes..."
 git -C "$TARGET_PATH" add .
 
-# --- [NEW] Selectively Unstage Meta Files ---
-# After staging everything, we now unstage the specific .meta files
+# --- Selectively Unstage Meta Files & Custom Ignore Patterns ---
+# After staging everything, we now unstage the specific files
 # related to the renamed folders. This prevents them from being committed.
-echo "--- Excluding .meta files from the commit ---"
+echo "--- Excluding specified patterns (${UNSTAGE_PATTERNS[*]}) from the commit ---"
 for i in "${!LOCAL_FOLDER_NAMES[@]}"; do
     original_folder_name="${LOCAL_FOLDER_NAMES[$i]}"
     new_folder_path="${TARGET_PATH}/${REMOTE_FOLDER_NAMES[$i]}"
@@ -332,24 +410,44 @@ for i in "${!LOCAL_FOLDER_NAMES[@]}"; do
     # Define the path to the .meta file for the original folder (e.g., "Samples.meta")
     top_level_meta_path="${TARGET_PATH}/${original_folder_name}.meta"
 
-    # 1. Unstage the deletion of the original folder's .meta file
+    # Unstage the deletion of the original folder's .meta file
     # We check if the file was tracked by Git before trying to unstage it.
     if git -C "$TARGET_PATH" ls-files --error-unmatch "$top_level_meta_path" > /dev/null 2>&1; then
-        echo "Unstaging: ${original_folder_name}.meta"
-        git -C "$TARGET_PATH" reset HEAD -- "$top_level_meta_path"
+        echo "Unstaging top-level meta: ${original_folder_name}.meta"
+        git -C "$TARGET_PATH" reset HEAD -- "$top_level_meta_path" > /dev/null 2>&1 || true
     fi
 
-    # 2. Unstage all .meta files inside the newly renamed folder (e.g., inside "Samples~")
+    # Unstage all .meta files inside the newly renamed folder (e.g., inside "Samples~")
     # This finds all *.meta files and pipes them to `git reset HEAD` to unstage them.
-    # The `-print0 | xargs -0` handles filenames with spaces or special characters safely.
     if [[ -d "$new_folder_path" ]]; then
         echo "Unstaging all .meta files inside '${REMOTE_FOLDER_NAMES[$i]}/'"
-        find "$new_folder_path" -name "*.meta" -print0 | xargs -0 -I {} git -C "$TARGET_PATH" reset HEAD -- {} > /dev/null 2>&1
+        find "$new_folder_path" -name "*.meta" -print0 | xargs -0 -I {} git -C "$TARGET_PATH" reset HEAD -- {} > /dev/null 2>&1 || true
     fi
 done
 
-echo "Committing with message: \"$COMMIT_MESSAGE\""
-git -C "$TARGET_PATH" commit -m "$COMMIT_MESSAGE"
+# 3. Apply any additional unstage operations for custom patterns defined in UNSTAGE_PATTERNS
+for pattern in "${UNSTAGE_PATTERNS[@]}"; do
+    # Skip *.meta here since the specialized loop above already handled it precisely
+    if [[ "$pattern" != "*.meta" ]]; then
+        git -C "$TARGET_PATH" reset HEAD -- "$pattern" > /dev/null 2>&1 || true
+    fi
+done
+
+# --- Check Staged Changes Post-Rename ---
+HAS_STAGED_CHANGES=0
+if ! git -C "$TARGET_PATH" diff --cached --quiet; then
+    HAS_STAGED_CHANGES=1
+fi
+
+if [[ "$HAS_STAGED_CHANGES" -eq 0 && "$OUTGOING_COMMITS" -eq 0 ]]; then
+    echo "✅ No changes to commit. Working tree is clean."
+    exit 0
+fi
+
+if [[ "$HAS_STAGED_CHANGES" -eq 1 ]]; then
+    echo "Committing with message: \"$COMMIT_MESSAGE\""
+    git -C "$TARGET_PATH" commit -m "$COMMIT_MESSAGE"
+fi
 
 # Create annotated tag locally if a new version was detected
 if [[ -n "$TAG_TO_CREATE" ]]; then
@@ -358,11 +456,10 @@ if [[ -n "$TAG_TO_CREATE" ]]; then
 fi
 
 # --- Push Executions ---
-
 echo "Pushing changes to '$UPSTREAM_BRANCH'..."
 # The final `git push` is the true test of write access.
 if ! git -C "$TARGET_PATH" push "$REMOTE_NAME" "$CURRENT_BRANCH"; then
-    echo "Error: Failed to push changes to the remote repository." >&2
+    echoerror "Error: Failed to push changes to the remote repository." >&2
 
     # Rollback local tag if created
     if [[ -n "$TAG_TO_CREATE" ]]; then
@@ -378,9 +475,9 @@ if ! git -C "$TARGET_PATH" push "$REMOTE_NAME" "$CURRENT_BRANCH"; then
     if git -C "$TARGET_PATH" rev-parse --verify HEAD~1 > /dev/null 2>&1; then
         echo "Attempting to reset the last commit locally..."
         git -C "$TARGET_PATH" reset --soft HEAD~1
-        echo "Warning: The last commit was reset locally due to a failed push." >&2
+        echowarning "Warning: The last commit was reset locally due to a failed push." >&2
     else
-        echo "Warning: Cannot reset the initial commit of the repository." >&2
+        echowarning "Warning: Cannot reset the initial commit of the repository." >&2
     fi
     exit 1
 fi
@@ -389,13 +486,13 @@ fi
 if [[ -n "$TAG_TO_CREATE" ]]; then
     echo "Pushing tag '$TAG_TO_CREATE' to '$REMOTE_NAME'..."
     if ! git -C "$TARGET_PATH" push "$REMOTE_NAME" "$TAG_TO_CREATE"; then
-        echo "⚠️ Warning: Commit pushed successfully, but pushing tag '$TAG_TO_CREATE' failed." >&2
+        echowarning "⚠️ Warning: Commit pushed successfully, but pushing tag '$TAG_TO_CREATE' failed." >&2
     else
-        echo "✅ Tag '$TAG_TO_CREATE' successfully pushed!"
+        echosuccess "✅ Tag '$TAG_TO_CREATE' successfully pushed!"
     fi
 fi
 
-echo "✅ Success! Changes have been pushed to the remote repository."
+echosuccess "✅ Success! Changes have been pushed to the remote repository."
 exit 0
 
 
@@ -424,11 +521,11 @@ exit 0
 #																	  #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #																	  #
-#   > if we fail, log shows old commits due to failure				  #
+#   			  			  			  			   			      #
 #																	  #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #																	  #
-#   > add custom echo messages when code is complete				  #
+#   			  			  			  			   			      #
 #																	  #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

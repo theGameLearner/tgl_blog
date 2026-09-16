@@ -3,7 +3,7 @@
 ---
 
 created: 2026-08-08
-updated: 2026-08-08
+updated: 2026-08-23
 
 ### Idea
 Sometimes, we do not need a notes app, we are working on something and need to quickly make a note, maybe when talking to a friend, listening to a new song and want to save the name for future re-visit, shopping list when leaving the house, etc.
@@ -64,7 +64,8 @@ After "Finish", Open `http://<ip_address>:10006/admin` and log in.
 > [!Warning]
 > Because we are using redirect, the IP addresses may not work well when working with custom URL names.
 
-I deleted the container, stack and all files after this as making it work on my custom URL is a necessary tool for me.
+I deleted the container, stack and all files after this as making it work on my custom URL is a necessary tool for me. For solving it, I went with [[#UseMemos]].
+
 ### Microbin
 Same as Gopaki, craete the YML with data in same folder and using the same port:
 ```yml
@@ -103,8 +104,30 @@ services:
       - /apps/pastebin:/app/microbin_data:rw
 ```
 
-I do not need to configure anything on MicroBin as there is no need of user authentication due to `MICROBIN_NO_DISPASS=true`
+I do not need to configure anything on MicroBin as there is no need of user authentication due to `MICROBIN_NO_DISPASS=true`.
 
+The files expire and are useful to transfer temp files without worrying about overfilling the memory with junk.
+The UI is average and not exceptional or good, but gets the work done.
+The file names have no relation with the data, so good if you need to transfer once or retain the link for a limited time.
+
+### UseMemos
+This allows users to create public or private memos, and also remembers the date and time note was created.
+We only need to login once, but the UI and feel is closer to a text dump for what I needed.
+yml file:
+```yml
+services:
+  memos:
+    image: neosmemo/memos:stable
+    ports:
+      - "10007:5230"
+    volumes:
+      - /apps/memos:/var/opt/memos
+    environment:
+      - TZ=Asia/Kolkata
+    restart: unless-stopped
+```
+
+This is loaded in my `10007` port and works well with custom URL, solving the issue with [[#Gokapi]].
 #### Add a URL to the service
 
 Update the caddyfile and coredns configurations so that we can access this with a url

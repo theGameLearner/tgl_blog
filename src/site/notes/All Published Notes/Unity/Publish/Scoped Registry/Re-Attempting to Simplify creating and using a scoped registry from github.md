@@ -278,7 +278,7 @@ thegamelearner@thegamelearner-MS-7E12:$ ssh -T git@github.com-tglGames-Plugins
 Hi tglGames! You\'ve successfully authenticated, but GitHub does not provide shell access.
 
 Sun Jul 26, 05:45:44 PM "~/Documents/Unity Projects/All_Plugins/Assets/All Modules/TutorialHandler"|
-thegamelearner@thegamelearner-MS-7E12:$ git remote set-url origin git@github.com-tglGames-Plugins:tglGames-Plugins/tgl-tutorial-manager.git
+thegamelearner@thegamelearner-MS-7E12:$ git remote add origin git@github.com-tglGames-Plugins:tglGames-Plugins/tgl-tutorial-manager.git
 
 Sun Jul 26, 05:46:02 PM "~/Documents/Unity Projects/All_Plugins/Assets/All Modules/TutorialHandler"|
 thegamelearner@thegamelearner-MS-7E12:$ git push -u origin main --force
@@ -349,6 +349,15 @@ thegamelearner@thegamelearner-MS-7E12:$
 
 #### Fixing the package release (only for first time)
 Due to naming conflict in Unity and NPM naming conventions, the package appears as published but is not found when searching. To avoid this, we will make a release on version `1.0.1` with the name changed to `"@tglGames-Plugins/com.tglgames.tgl-tutorial-manager"` and then release `1.0.2` with the name changed back to `"name": "com.tglgames.tgl-tutorial-manager",`
+
+> [!Note]
+> Change the version and name to new format, push in git upstream with new tag, call `npm publish` and after this, change the name back to old format. If you do not publish at the right time, the package is not created.
+
+
+> [!Warn]
+> Names should not have a capitol letter, validate package is published at organization level not in the repository. I wasted hours trying to fix a problem I did not have.
+
+
 
 Open `package.json` in an editor (vs code or text editor) and release it with version changes as shown in terminal output:
 ```sh
