@@ -28,8 +28,12 @@ These are changes we can do to the system to load and make our commands availabl
 - System
 	- `identify_system` : [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/identify_system\|identify_system]]
 	- `list_extensions`: [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/list_extensions\|list_extensions]]
+	- File Explorers / Managers
+		- [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/File Managers/Finding the File Explorer Used\|Finding the File Explorer Used]]
+		- [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/File Managers/Nemo/Custom MIME types\|Custom MIME types]]
+		- [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/manually-loaded/System/File Managers/Nemo/Adding New Column Types\|Adding New Column Types]]
 - Apps
-	- install_git_package : This is a template which we can use for installing apps that are released on github and I may want to download whenever the system updates
+	- *install_git_package* : This is a template which we can use for installing apps that are released on github and I may want to download whenever the system updates
 		- [[All Published Notes/Computer System/Software/Computer/Personal Changes/Shell Scripts/ShellAutomationScripts/Download and install git packages\|Download and install git packages]]
 			- shows the template with example data for [ScrcpyGUI repository](https://github.com/kil0bit-kb/scrcpy-gui/).
 - Unity
